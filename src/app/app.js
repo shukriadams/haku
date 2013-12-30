@@ -43,7 +43,7 @@ var haku = haku || {};
         
         currentView: null,
         root: null,
-        test : "1",
+
         initialize: function () {
             // causes routes to appear as full pages
             Backbone.history.start({ pushState: true });

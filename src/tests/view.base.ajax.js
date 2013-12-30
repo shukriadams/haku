@@ -45,7 +45,7 @@
 
 
     // ===========================================================================
-    //
+    // Note : requires disable web security to load cross-domain json
     // ---------------------------------------------------------------------------
     asyncTest("tests successful data retrieval", function () {
         var view = haku.views.base.ajax.instance();
