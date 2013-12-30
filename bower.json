@@ -1,0 +1,32 @@
+{
+  "name": "Backbone playground",
+  "version": "1.0.0",
+  "main": "path/to/main.css",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt",
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "authors": [
+    "Shukri Adams <shukri.adams@gmail.com>"
+  ],
+    "dependencies": {
+        "klon": "https://raw.github.com/shukriadams/klon/master/klon.js",
+        "backbone": "1.1.0",
+        "foundation": "5.0.2",
+        "jquery": "~2.0.3",
+        "modernizr": "2.7.1",
+        "requirejs": "~2.1.9",
+        "underscore": "~1.5.2",
+        "qunit" : "~1.12.0",
+        "ejs" : "https://embeddedjavascript.googlecode.com/files/ejs_production.js",
+        "phonegap" : "2.9.0"
+    },  
+  "license": "MIT",
+  "description": "A test sandbox for a backbone-based phonegap app",
+  "private": true
+}

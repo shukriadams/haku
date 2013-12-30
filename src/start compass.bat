@@ -1,0 +1,1 @@
+start compass watch

@@ -1,0 +1,17 @@
+/.idea
+/node_modules
+/bower_components
+/deploy
+/src/.sass-cache
+/src/3rdparty
+!/src/3rdparty/cordova.js
+/compile_web
+/compile_android
+/binary_builds/Android.3.3.0.build/www/*
+!/binary_builds/Android.3.3.0.build/www/config.xml
+binary_builds/Eclipse debug project/Fortehwin/assets/*
+/compile_android.bat
+/compile_web.bat
+/deps.bat
+/sen
+/sen.bat
