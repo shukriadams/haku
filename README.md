@@ -1,11 +1,13 @@
 Haku
 ----
-Haku is a boilerplate framework for quickly creating Phonegap applications. It has relatively few dependencies, and everything that made it in was chosen for size and performance.
+Haku is a boilerplate framework for rapidly creating Phonegap applications. It has relatively few dependencies, and everything that made it in was chosen for size and performance.
 
-- Implemented in Backbone, it provides a scaffold on which you can create your app as Backbone views. 
-- Haku ships with Foundation in Sass mode, so you can change the look and feel of your app quickly.
-- Haku provides a series of common utility classes for managing offline data, authentication, page transitions etc. 
-- Haku uses Grunt and Bower for build tasks and dependencies. It takes care of the usual HTML minification etc, and also builds a deployable Phonegap binary with a single command. 
+Haku
+- is implemented with Backbone; it provides a scaffold on which you can create your app as Backbone views. 
+- ships with Foundation in Sass mode, so you can change the look and feel of your app quickly.
+- provides a series of common utility classes for managing offline data, authentication, page transitions etc. 
+- uses Grunt and Bower for build tasks and dependencies. It takes care of the usual HTML minification etc, 
+- compiles to HTML which can in turn seamlessly compile to Phonegap with the Cordova CLI or Adobe Build. 
 
 Haku would like to be 
 - object oriented, at least as much as Javascript permits
@@ -53,13 +55,21 @@ Haku should now be ready to run in your browser
 
 Use
 ---
-A very simple example of an app. This uses Requirejs to manage view files, jQuery to trigger override and start, and everything else is standard Backbone router + views.
+A very simple example of an app. This uses Requirejs to manage view files, jQuery to trigger start, and everything else is standard Backbone router + views.
 
+	// jquery fires up app when the DOM has loaded, but any DOM loader will do
 	$(function(){
 
+
+		// override the haku application, add your own app logic	
 	    klon.register(haku, 'application', haku.application.type().extend({
 	        initialize : function(){
+
+	        	// this calls the base initialize() method in the class we inherit from (haku.application).
+	        	// Haku base classes have their own logic. You are free to override them, but do call them
 	            klon.base(this, "initialize", arguments);
+
+				// use Requirejs to add a view
 	            require.config({
 	                paths: {
 	                    'helloworldview': 'path/to/view/helloworld',
@@ -68,12 +78,16 @@ A very simple example of an app. This uses Requirejs to manage view files, jQuer
 	        }
 	    }));
 
+
+	    // override haku's router
 	    klon.register(haku , 'routers', haku.routers.type().extend({
-	        // add routes
+	        
+	        // add a route
 	        routes : {
 	        	"hello": "hello"
 	        },
-	        // handle routes
+
+	        // handle route
 	        hello : function(){
 	            require(['helloworldview'], function(){
 	            	// render view here
@@ -81,6 +95,8 @@ A very simple example of an app. This uses Requirejs to manage view files, jQuer
 	        }
 	    }));
 
+
+	    // instantiate app and start it	
 	    var app = haku.application.instance();
 	    app.start();
 
@@ -93,7 +109,7 @@ Compile HTML
 From the project root
 - "grunt --gruntfile compile_X.js" (where X is the target platform) 
 
-The files generated will behave the same as the ones you've viewed in /src, but will have platform-specific settings (if any) applied to them, as well as being minified. You can use these files for building a Phonegap binary for your target platform, either on your own system or via a service like Adobe Build.
+The files generated will behave the same as the ones you've viewed in /src, but will have platform-specific settings (if any) applied to them, as well as being minified. You can use these files for building a Phonegap binary for your target platform, either locally (see next section) or via a service like Adobe Build.
 
 
 Building locally
