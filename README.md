@@ -55,36 +55,36 @@ Use
 ---
 A very simple example of an app. This uses Requirejs to manage view files, jQuery to trigger override and start, and everything else is standard Backbone router + views.
 
-$(function(){
+	$(function(){
 
-    klon.register(haku, 'application', haku.application.type().extend({
-        initialize : function(){
-            klon.base(this, "initialize", arguments);
-            require.config({
-                paths: {
-                    'helloworldview': 'path/to/view/helloworld',
-                }
-            }); 
-        }
-    }));
+	    klon.register(haku, 'application', haku.application.type().extend({
+	        initialize : function(){
+	            klon.base(this, "initialize", arguments);
+	            require.config({
+	                paths: {
+	                    'helloworldview': 'path/to/view/helloworld',
+	                }
+	            }); 
+	        }
+	    }));
 
-    klon.register(haku , 'routers', haku.routers.type().extend({
-        // add routes
-        routes : {
-        	"hello": "hello"
-        },
-        // handle routes
-        hello : function(){
-            require(['helloworldview'], function(){
-            	// render view here
-            });
-        }
-    }));
+	    klon.register(haku , 'routers', haku.routers.type().extend({
+	        // add routes
+	        routes : {
+	        	"hello": "hello"
+	        },
+	        // handle routes
+	        hello : function(){
+	            require(['helloworldview'], function(){
+	            	// render view here
+	            });
+	        }
+	    }));
 
-    var app = haku.application.instance();
-    app.start();
+	    var app = haku.application.instance();
+	    app.start();
 
-});
+	});
 
 
 
