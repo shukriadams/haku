@@ -25,6 +25,8 @@ Coming soon
 - automated Adobe Build integration
 - Currently only Android is supported, iOS is incoming.
 - better build support on non-Windows systems.
+- a kitchen sink demo project.
+
 
 Basic set up
 ------------
