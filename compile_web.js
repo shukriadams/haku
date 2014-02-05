@@ -12,8 +12,7 @@ module.exports = function(grunt) {
         copy: {
             main: {
                 files: [
-                    {expand: true, cwd : sourceFolder, src: ['**'], dest: targetFolder + '/'},
-                    { src: [ sourceFolder + '/app/settings-browser.js'], dest : targetFolder + '/app/settings.js', filter: 'isFile'}
+                    {expand: true, cwd : sourceFolder, src: ['**'], dest: targetFolder + '/'}
                 ]
             }
         },

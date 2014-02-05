@@ -35,6 +35,12 @@ var haku = haku || {};
     };
 
 
+    // ===========================================================================
+    // Will be called before haku is started. This is a good place to trigger your
+    // own bindings from
+    // ---------------------------------------------------------------------------
+    haku.initialize = function(){ };
+
 
     // ===========================================================================
     // Router. Override this and add routes and route handlers for your own app.
@@ -80,7 +86,6 @@ var haku = haku || {};
         }
 
     });
-
     klon.register(haku, 'routers', router);
 
 
@@ -139,5 +144,28 @@ var haku = haku || {};
             haku.i._storage = haku.helpers.dataStores.instance();
         return haku.i._storage;
     };
+
+
+    // ===========================================================================
+    // Use to launch app based on Phonegap's own device events.
+    // Required by iOS, won't work in a standard browser, not
+    // needed by Android.
+    // ---------------------------------------------------------------------------
+    if (haku.settings.launchMode === "managed"){
+        var managedAppLauncher = {
+
+            start: function() {
+                document.addEventListener('deviceready', this.onDeviceReady, false);
+            },
+
+            onDeviceReady: function() {
+                haku.initialize();
+                var app = haku.application.instance();
+                app.start();
+            }
+
+        };
+        managedAppLauncher.start();
+    }
 
 }());

@@ -1,11 +1,9 @@
-/*
-These are standard "desktop" browser settings, intended for development use.
-*/
 (function(){
 
     // ===========================================================================
     // Running any platform specific startup stuff
     // ---------------------------------------------------------------------------
+    $.ajaxSetup({ cache: true }); // fixes dreaded chromium-6 error in Android
     klon.logging = true;
 
 
@@ -13,8 +11,9 @@ These are standard "desktop" browser settings, intended for development use.
     // Override settings
     // ---------------------------------------------------------------------------
     _.extend(haku.settings, {
-        systemPathRoot : "/",
-        launchMode : "direct"
+        appName : "MyApp",
+        systemPathRoot : "file:///var/mobile/Applications/7D6D107B-D9DC-479B-9E22-4847F0CA0C40/" + this.appName + ".app/www/",
+        launchMode : "managed"
     });
 
 }());
