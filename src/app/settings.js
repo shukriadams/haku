@@ -13,8 +13,8 @@ These are standard "desktop" browser settings, intended for development use.
     // Override settings
     // ---------------------------------------------------------------------------
     _.extend(haku.settings, {
-        systemPathRoot : "/",
-        launchMode : "direct"
+        launchMode : "direct",
+        systemPathRoot : "/"
     });
 
 }());

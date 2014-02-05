@@ -12,8 +12,9 @@
     // ---------------------------------------------------------------------------
     _.extend(haku.settings, {
         appName : "MyApp",
-        systemPathRoot : "file:///var/mobile/Applications/7D6D107B-D9DC-479B-9E22-4847F0CA0C40/" + this.appName + ".app/www/",
-        launchMode : "managed"
+        launchMode : "managed",
+        systemPathRoot : "file:///var/mobile/Applications/7D6D107B-D9DC-479B-9E22-4847F0CA0C40/" + this.appName + ".app/www/"
+
     });
 
 }());

@@ -11,8 +11,8 @@
     // Override settings
     // ---------------------------------------------------------------------------
     _.extend(haku.settings, {
-        systemPathRoot : "file:///android_asset/www/",
-        launchMode : "direct"
+        launchMode : "direct",
+        systemPathRoot : "file:///android_asset/www/"
     });
 
 }());

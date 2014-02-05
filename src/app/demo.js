@@ -10,7 +10,7 @@ $(function(){
         initialize: function () {
             klon.base(this, "initialize", arguments );
             this.root = $('body');
-            this.root.html("Welcome to Haku!");
+            this.root.append("Welcome to Haku!");
         }
 
     }));
@@ -19,7 +19,17 @@ $(function(){
     // ===========================================================================
     // start app
     // ---------------------------------------------------------------------------
-    var app = haku.application.instance();
-    app.start();
+    function start(){
+        var app = haku.application.instance();
+        app.start();
+    }
+
+    if (haku.settings.launchMode === "direct"){
+        start();
+    } else if (haku.settings.launchMode === "managed"){
+        document.addEventListener('deviceready', function(){
+            start();
+        }, false);
+    }
 
 });

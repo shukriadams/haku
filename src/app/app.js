@@ -30,16 +30,10 @@ var haku = haku || {};
         
         // Standardizes resource urls depending on device - on browsers must be "/",
         // on mobile devices will be an OS specific url fragment.
-        systemPathRoot : "OVERRIDE-REQUIRED"
+        systemPathRoot : "OVERRIDE-REQUIRED",
+        launchMode : "OVERRIDE-REQUIRED"
 
     };
-
-
-    // ===========================================================================
-    // Will be called before haku is started. This is a good place to trigger your
-    // own bindings from
-    // ---------------------------------------------------------------------------
-    haku.initialize = function(){ };
 
 
     // ===========================================================================
@@ -159,7 +153,6 @@ var haku = haku || {};
             },
 
             onDeviceReady: function() {
-                haku.initialize();
                 var app = haku.application.instance();
                 app.start();
             }

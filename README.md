@@ -116,11 +116,4 @@ The files generated will behave the same as the ones you've viewed in /src, but 
 
 Building locally
 ----------------
-You need the JDK and Ant installed and configured on your system as global resources. Depending on which platform you're building for you will also need the Android SDK or XCode on your system, properly configured. This document does not describe how to set those up.
-Set up Cordova's CLI with
-- "npm install -g cordova"
-
-To build an Android app:
-- "build_phonegap_android_headless.bat myNewApp"
-
-This will build an .apk which you can find in myNewApp\platforms\android\bin. If you have a device connected to your system, it will also deploy and start your app on that device.
+Please see phonegap.com for detailed build instructions.
