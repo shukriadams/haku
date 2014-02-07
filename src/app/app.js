@@ -31,6 +31,7 @@ var haku = haku || {};
         // Standardizes resource urls depending on device - on browsers must be "/",
         // on mobile devices will be an OS specific url fragment.
         systemPathRoot : "OVERRIDE-REQUIRED",
+        getSystemPathRootAtStart : false,
         launchMode : "OVERRIDE-REQUIRED"
 
     };
@@ -47,6 +48,11 @@ var haku = haku || {};
         initialize: function () {
             // causes routes to appear as full pages
             Backbone.history.start({ pushState: true });
+
+            // get absolute path of app resources - required by ios
+            if (haku.i.settings.getSystemPathRootAtStart){
+                haku.i.settings().systemPathRoot = window.location.pathname.replace("index.html", "");
+            }
         },
 
         // transitions page view in. If page supports sliding transition,
