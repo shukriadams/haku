@@ -19,6 +19,7 @@ var haku = haku || {};
         this.code = code || "";
         this.message = message || "Default Message";
     }
+
     type.prototype = new Error();
     type.prototype.constructor = type;
 

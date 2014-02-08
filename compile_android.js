@@ -40,23 +40,35 @@ module.exports = function(grunt) {
       },
 
       clean: [
-        targetFolder + "/shim",
+        targetFolder + "/shims/disposable",
         targetFolder + "/css-sass",
         targetFolder + "/tests",
         targetFolder + "/config.rb",
         targetFolder + "/start compass.bat",
         targetFolder + "/app/settings-*.js"
-      ]
+      ],
+
+      replace: {
+          example: {
+              // clear all shim files of content, but leave empty files 
+              src: [ targetFolder + '/shims/*.js'],
+              dest: targetFolder + '/shims/',
+              replacements: [{
+                  from: /.*/g,                   
+                  to: ''
+              }]
+          }
+      }
 
   });
 
-  // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-text-replace');
 
   // Default task(s).
-  grunt.registerTask('default', ['copy', 'uglify', 'cssmin', 'clean']);
+  grunt.registerTask('default', ['copy', 'uglify', 'cssmin', 'clean' ,'replace']);
 
 };
