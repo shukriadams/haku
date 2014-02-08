@@ -5,7 +5,7 @@ $(function(){
     // Simple router to demonstrate application load. Requires an html document
     // with a body tag, which, is really not too much to ask.
     // ---------------------------------------------------------------------------
-    klon.register(haku , 'routers', haku.routers.type().extend({
+    klon.register('haku.routers', haku.routers.type().extend({
 
         initialize: function () {
             klon.base(this, "initialize", arguments );
@@ -26,7 +26,7 @@ $(function(){
 
     if (haku.settings.launchMode === "direct"){
         start();
-    } else if (haku.settings.launchMode === "managed"){
+    } else if (haku.settings.launchMode === "onready"){
         document.addEventListener('deviceready', function(){
             start();
         }, false);

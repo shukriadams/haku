@@ -11,7 +11,7 @@
     // Override settings
     // ---------------------------------------------------------------------------
     _.extend(haku.settings, {
-        launchMode : "managed",
+        launchMode : "onready",
         getSystemPathRootAtStart : true,
         systemPathRoot : ""
 

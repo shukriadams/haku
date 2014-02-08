@@ -36,7 +36,7 @@ var haku = haku || {};
     // add event support
     _.extend(type.prototype, Backbone.Events);
 
-    klon.register(haku, "helpers.authentication", type );
+    klon.register('haku.helpers.authentication', type );
 
 } ());
 
@@ -124,7 +124,7 @@ var haku = haku || {};
         }
     };
 
-    klon.register(haku, "helpers.dataStores", "localStorage", type);
+    klon.register('haku.helpers.dataStores', 'localStorage', type);
 
 }());
 
@@ -147,7 +147,7 @@ var haku = haku || {};
         });
     };
 
-    klon.register(haku, "remote.tokenProviders", "test", type);
+    klon.register('haku.remote.tokenProviders', 'test', type);
 
 } ());
 
@@ -171,6 +171,6 @@ var haku = haku || {};
         this.token = null;
     };
 
-    klon.register(haku, "helpers.tokenStores", type);
+    klon.register('haku.helpers.tokenStores', type);
 
 }());

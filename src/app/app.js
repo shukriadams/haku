@@ -86,7 +86,7 @@ var haku = haku || {};
         }
 
     });
-    klon.register(haku, 'routers', router);
+    klon.register('haku.routers', router);
 
 
 
@@ -106,7 +106,7 @@ var haku = haku || {};
             $(document).foundation();
         }
     });
-    klon.register(haku, 'application', app);
+    klon.register('haku.application', app);
 
 
     // ===========================================================================
@@ -144,27 +144,5 @@ var haku = haku || {};
             haku.i._storage = haku.helpers.dataStores.instance();
         return haku.i._storage;
     };
-
-
-    // ===========================================================================
-    // Use to launch app based on Phonegap's own device events.
-    // Required by iOS, won't work in a standard browser, not
-    // needed by Android.
-    // ---------------------------------------------------------------------------
-    if (haku.settings.launchMode === "managed"){
-        var managedAppLauncher = {
-
-            start: function() {
-                document.addEventListener('deviceready', this.onDeviceReady, false);
-            },
-
-            onDeviceReady: function() {
-                var app = haku.application.instance();
-                app.start();
-            }
-
-        };
-        managedAppLauncher.start();
-    }
 
 }());

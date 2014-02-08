@@ -17,16 +17,15 @@ Haku would like to be
 
 Status
 ------
-Haku is still in early alpha. It builds and works, but its structure is still not settled. Use with care.
+Haku is still in early alpha. It builds and works, but its structure hasn't settled yet. Use with care.
 
 
 Coming soon
 -----------
 - automated Adobe Build integration
-- Currently only Android is supported, iOS is incoming.
 - better build support on non-Windows systems.
 - a kitchen sink demo project.
-
+- shims for standard camera hardware to emulate Phonegap drivers.
 
 Basic set up
 ------------

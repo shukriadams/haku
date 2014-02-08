@@ -8,7 +8,7 @@ var haku = haku || {};
         this.createdUtc = args.createdUtc ? args.createdUtc : 0;
     };
 
-    klon.register(haku, "models.authTokens", type);
+    klon.register('haku.models.authTokens', type);
 
 }());
 
@@ -22,6 +22,6 @@ var haku = haku || {};
     type.prototype = new Error();
     type.prototype.constructor = type;
 
-    klon.register(haku, "models.exception", type);
+    klon.register('haku.models.exception', type);
 
 }());

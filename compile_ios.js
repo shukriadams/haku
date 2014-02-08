@@ -3,7 +3,7 @@ module.exports = function(grunt) {
   
   'use strict';
 
-  var targetFolder = "compile_android";
+  var targetFolder = "compile_ios";
   var sourceFolder = "src";
 
   // Project configuration.
@@ -14,7 +14,7 @@ module.exports = function(grunt) {
           main: {
               files: [
                   { expand: true, cwd : sourceFolder, src: ['**'], dest: targetFolder + '/' },
-                  { src: [ sourceFolder + '/app/settings-android.js'], dest : targetFolder + '/app/settings.js', filter: 'isFile' }
+                  { src: [ sourceFolder + '/app/settings-ios.js'], dest : targetFolder + '/app/settings.js', filter: 'isFile' }
               ]
           }
       },

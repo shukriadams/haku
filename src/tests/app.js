@@ -54,7 +54,7 @@
     test("tests app creation", function(){
         var root = $("<div style='display:none'></div>");
         $('body').append(root);
-        klon.register(haku , 'routers', haku.routers.type().extend({
+        klon.register('haku.routers', haku.routers.type().extend({
             initialize : function () {
                 klon.base(this, "initialize", arguments );
                 this.root = root;

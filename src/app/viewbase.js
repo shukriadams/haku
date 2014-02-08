@@ -2,7 +2,7 @@ var haku = haku || {};
 
 (function(){
 
-	klon.register(haku, 'views.base.basic', Backbone.View.extend({
+	klon.register('haku.views.base.basic', Backbone.View.extend({
 
         // any text written to this will be outputted as view content, unless
         // this.template is set, in which case template is used instead.
@@ -62,7 +62,7 @@ var haku = haku || {};
 
     // IMPORTANT : if this throws cross-domain ajax security issue on dev machine, start chrome with "--disable-web-security" switch
     // unless pages are live-updated at startup, this will be the first attempt to get online, so handle breakages here
-    klon.register(haku, 'views.base.ajax', haku.views.base.basic.type().extend({
+    klon.register('haku.views.base.ajax', haku.views.base.basic.type().extend({
 
         url : "",               // REQUIRED.
         storeKey : "",          // REQUIRED.
