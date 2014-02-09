@@ -1,6 +1,6 @@
 {
-  "name": "Backbone playground",
-  "version": "1.0.0",
+  "name": "Haku",
+  "version": "0.0.1",
   "main": "path/to/main.css",
   "ignore": [
     ".jshintrc",
@@ -27,6 +27,6 @@
         "phonegap" : "2.9.0"
     },  
   "license": "MIT",
-  "description": "A test sandbox for a backbone-based phonegap app",
+  "description": "An opinionated boilerplate for Phonegap apps.",
   "private": true
 }
