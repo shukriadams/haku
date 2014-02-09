@@ -53,7 +53,7 @@
 
             var error = function(message){
                 start();
-                ok(message === "user cancelled");
+                ok(message === "err");
             }
 
             navigator.camera.getPicture(null, error);
