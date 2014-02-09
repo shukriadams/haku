@@ -32,7 +32,8 @@ var haku = haku || {};
         // on mobile devices will be an OS specific url fragment.
         systemPathRoot : "OVERRIDE-REQUIRED",
         getSystemPathRootAtStart : false,
-        launchMode : "OVERRIDE-REQUIRED"
+        launchMode : "OVERRIDE-REQUIRED",
+        platform : "OVERRIDE-REQUIRED"
 
     };
 

@@ -13,8 +13,8 @@
     _.extend(haku.settings, {
         launchMode : "onready",
         getSystemPathRootAtStart : true,
-        systemPathRoot : ""
-
+        systemPathRoot : "",
+        platform : "ios"
     });
 
 }());

@@ -14,7 +14,8 @@ These are standard "desktop" browser settings, intended for development use.
     // ---------------------------------------------------------------------------
     _.extend(haku.settings, {
         launchMode : "direct",
-        systemPathRoot : "/"
+        systemPathRoot : "/",
+        platform : "browser"
     });
 
 }());

@@ -12,7 +12,8 @@
     // ---------------------------------------------------------------------------
     _.extend(haku.settings, {
         launchMode : "direct",
-        systemPathRoot : "file:///android_asset/www/"
+        systemPathRoot : "file:///android_asset/www/",
+        platform : "android"
     });
 
 }());
