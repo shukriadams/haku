@@ -95,7 +95,7 @@ var haku = haku || {};
     // ---------------------------------------------------------------------------
     var app = Backbone.Model.extend({
         initialize : function(){
-            haku.i.app = this;
+            haku.app = this;
         },
         start : function(){
 
@@ -112,12 +112,10 @@ var haku = haku || {};
     // ===========================================================================
     // Global instances provider
     // ---------------------------------------------------------------------------
-    haku.i = {};
     haku.app = haku.app || null;
-    haku.router = haku.router|| null;
-    haku.settings = haku.settings|| null;
-    haku.storage = haku.storage || null;
-    haku.authentication = haku.authentication || null;
-    haku.storage = haku.storage || null;
+    haku.router = haku.router || null;
+    haku.settings = haku.settings || null;
+    haku.authentication = haku.helpers.authentication.instance();
+    haku.storage = haku.helpers.dataStores.instance();
 
 }());
