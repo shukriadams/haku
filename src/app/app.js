@@ -101,6 +101,8 @@ var haku = haku || {};
 
             // start router
             haku.router = haku.routers.instance();
+            haku.authentication = haku.helpers.authentication.instance();
+            haku.storage = haku.helpers.dataStores.instance();
 
             // start foundation. Do this after router initializes with default views
             $(document).foundation();
@@ -112,10 +114,10 @@ var haku = haku || {};
     // ===========================================================================
     // Global instances provider
     // ---------------------------------------------------------------------------
-    haku.app = haku.app || null;
-    haku.router = haku.router || null;
+    haku.app = null;
+    haku.router = null;
     haku.settings = haku.settings || null;
-    haku.authentication = haku.helpers.authentication.instance();
-    haku.storage = haku.helpers.dataStores.instance();
+    haku.authentication = null;
+    haku.storage = null;
 
 }());
