@@ -1,4 +1,6 @@
-// Use jQuery to wait for all base scripts to load, then override bases and start up.
+// For this demo we use jQuery's domReady to start app. In practice you can launch your app any time
+// you know all your required resources are loaded. Phonegap has its own "deviceready" event handler
+// to make sure it loads at the right time.
 $(function(){
 
     // ===========================================================================
@@ -19,17 +21,13 @@ $(function(){
     // ===========================================================================
     // start app
     // ---------------------------------------------------------------------------
-    function start(){
+    document.addEventListener('deviceready', function(){
         var app = haku.application.instance();
         app.start();
-    }
+    }, false);
 
     if (haku.settings.launchMode === "direct"){
-        start();
-    } else if (haku.settings.launchMode === "onready"){
-        document.addEventListener('deviceready', function(){
-            start();
-        }, false);
+        document.dispatchEvent(new CustomEvent("deviceready"));
     }
 
 });
