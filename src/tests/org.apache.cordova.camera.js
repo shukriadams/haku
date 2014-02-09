@@ -2,7 +2,7 @@
 
     'use strict';
 
-    module("Haku tests - shim.hardware.camera", {
+    module("Haku tests - camera shim", {
         setup: function () {
             require.config({
                 paths : {
@@ -20,7 +20,7 @@
     // ===========================================================================
     // Tests that the camera success callback returns an image url
     // ---------------------------------------------------------------------------
-    asyncTest("Success", function () {
+    asyncTest("Take a photo", function () {
 
         require(["camera"], function(){
 
@@ -43,7 +43,7 @@
     // ===========================================================================
     //
     // ---------------------------------------------------------------------------
-    asyncTest("Fail", function () {
+    asyncTest("Cancel", function () {
 
         require(["camera"], function(){
 
@@ -53,7 +53,7 @@
 
             var error = function(message){
                 start();
-                ok(message === "err");
+                ok(message === "user cancelled");
             }
 
             navigator.camera.getPicture(null, error);
