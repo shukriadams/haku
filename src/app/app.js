@@ -60,7 +60,7 @@ var haku = haku || {};
         _showPageView: function (view) {
 
             // removes old page out, if page supports t
-            var previousView = self.currentView || null;
+            var previousView = this.currentView || null;
             if (previousView && previousView.transitionOut) {
                 previousView.transitionOut(function () {
                     previousView.remove();
@@ -74,7 +74,7 @@ var haku = haku || {};
                 view.transitionIn();
             }
 
-            self.currentView = view;
+            this.currentView = view;
 
             this.root.empty();
             this.root.append(view.$el);
