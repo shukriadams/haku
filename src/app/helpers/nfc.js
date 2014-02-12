@@ -71,26 +71,27 @@
             return length < tagData.maxSize;
         },
 
+        //
         bind : function(onSuccess, onError){
             if (onError == undefined)
                 onError = null;
 
             nfc.addNdefListener(
                 function(nfcEvent){
-                    callback(nfcEvent);
+                    onSuccess(nfcEvent);
                 },
                 function() {
-
+                    // start alert, ignore
                 },
                 onError
             );
 
             nfc.addTagDiscoveredListener(
                 function(nfcEvent){
-                    callback(nfcEvent);
+                    onSuccess(nfcEvent);
                 },
                 function() {
-
+                    // start alert, ignore
                 },
                 onError
             );

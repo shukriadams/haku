@@ -42,15 +42,17 @@
             onTag : null,
 
             // invoke this to trigger the callback for when a tag is detected
-            raiseDetect : function(){
+            raiseDetect : function(items){
 
                 // write data items to tag event
                 nfcEvent.tag.ndefMessage = [];
-                for (var i = 0 ; i < this.data.length ; i++){
+                if (!items)
+                    items = [];
+                for (var i = 0 ; i < items.length ; i++){
                     nfcEvent.tag.ndefMessage.push({
                         id : [],
-                        type : [this.data[i].type],
-                        payload : [this.data[i].content],
+                        type : [items[i].type],
+                        payload : [items[i].content],
                         tnf : 0
                     });
                 }
