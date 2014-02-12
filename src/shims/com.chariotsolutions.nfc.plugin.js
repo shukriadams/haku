@@ -35,8 +35,14 @@
             // mime type to watch for.
             watchMimeType : null,
 
+            //
             onError : null,
 
+            // callback, invoked when write occurs
+            onWrite : null,
+
+            // callback, invoked when erase occurs
+            onErase : null,
 
             // callback from client.
             onTag : null,
@@ -48,11 +54,11 @@
                 nfcEvent.tag.ndefMessage = [];
                 if (!items)
                     items = [];
-                for (var i = 0 ; i < items.length ; i++){
+                for (var i = 0 ; i < this.data.length ; i++){
                     nfcEvent.tag.ndefMessage.push({
                         id : [],
-                        type : [items[i].type],
-                        payload : [items[i].content],
+                        type : [this.data[i].type],
+                        payload : [this.data[i].content],
                         tnf : 0
                     });
                 }
@@ -71,14 +77,17 @@
 
             // set to true if erase should raise an error
             errorOnErase : false,
+
             // message returned if erase error occurs
             errorOnEraseMessage : "error",
 
             // holds data that was written to tag. data is not actual nfc items but
             // { type : "string", content : "string" }
             data : [],
+
             // set to true if write must raise an error
             errorOnWrite : false,
+
             // message returned if write raises an error
             errorOnWriteMessage : "error"
         },
@@ -111,6 +120,11 @@
 
         // erases all data from tag
         erase  : function(onEvent, onError){
+
+            if (this.shim.onErase){
+                this.shim.onErase();
+            }
+
             if (this.shim.errorOnErase)
                 onError(this.shim.errorOnEraseMessage);
             else
@@ -124,9 +138,13 @@
 
             this.shim.data = items;
 
-            if (this.shim.errorOnWrite)
+            if (this.shim.onWrite){
+                this.shim.onWrite();
+            }
+
+            if (this.shim.errorOnWrite && onError)
                 onError(this.shim.errorOnWriteMessage);
-            else
+            else if (onEvent)
                 onEvent();
         },
 

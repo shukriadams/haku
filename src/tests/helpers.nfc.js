@@ -2,7 +2,7 @@
 
     'use strict';
 
-    module("Haku tests - NFC shim", {
+    module("Haku tests - NFC helper", {
         setup: function () {
             require.config({
                 paths : {
