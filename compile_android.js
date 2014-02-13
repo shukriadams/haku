@@ -49,7 +49,17 @@ module.exports = function(grunt) {
       ],
 
       replace: {
-          example: {
+
+          requireRoot: {
+              src: [ targetFolder + '/app/haku.js'],
+              dest: targetFolder + '/app/',
+              replacements: [{
+                  from: /haku.settings.systemPathRoot="\/"/g,
+                  to: 'haku.settings.systemPathRoot="file:///android_asset/www/"'
+              }]
+          },
+
+          removeShims: {
               // clear all shim files of content, but leave empty files 
               src: [ targetFolder + '/shims/*.js'],
               dest: targetFolder + '/shims/',
@@ -58,7 +68,7 @@ module.exports = function(grunt) {
                   to: ''
               }]
           }
-      }
+    }
 
   });
 

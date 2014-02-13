@@ -1,7 +1,6 @@
-// For this demo we use jQuery's domReady to start app. In practice you can launch your app any time
-// you know all your required resources are loaded. Phonegap has its own "deviceready" event handler
-// to make sure it loads at the right time.
-$(function(){
+// Use require to load haku scripts, and then start app.
+
+require(['haku'], function(){
 
     // ===========================================================================
     // Simple router to demonstrate application load. Requires an html document

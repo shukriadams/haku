@@ -1,5 +1,4 @@
 /*
-
  Namespaces reference
 
  haku.app;             Running instance of app. Global dependency, must be initialized. Starting app sets it.
@@ -13,7 +12,6 @@
  haku.remote. :                Types which represent calls on remote servers, normally external APIs or suchlike.
  haku.remote.tokenProviders. : Gets authentication tokens. IE, remote logging in happens here.
  haku.routers. :
-
 */
 
 var haku = haku || {};
@@ -21,21 +19,6 @@ var haku = haku || {};
 (function () {
 
     'use strict';
-
-    // ===========================================================================
-    // Base settings : these must be override by settings.js in /app folder.
-    // ---------------------------------------------------------------------------
-    haku.settings = {
-
-        // Standardizes resource urls depending on device - on browsers must be "/",
-        // on mobile devices will be an OS specific url fragment.
-        systemPathRoot : "OVERRIDE-REQUIRED",
-        getSystemPathRootAtStart : false,
-        launchMode : "OVERRIDE-REQUIRED",
-        platform : "OVERRIDE-REQUIRED"
-
-    };
-
 
     // ===========================================================================
     // Router. Override this and add routes and route handlers for your own app.
