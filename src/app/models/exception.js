@@ -1,5 +1,6 @@
-
 (function(){
+
+    'use strict';
 
     // exception with codes
     var type = function (message, code) {

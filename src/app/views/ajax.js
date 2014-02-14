@@ -1,5 +1,7 @@
 (function(){
 
+    'use strict';
+
     // IMPORTANT : if this throws cross-domain ajax security issue on dev machine, start chrome with "--disable-web-security" switch
     // unless pages are live-updated at startup, this will be the first attempt to get online, so handle breakages here
     klon.register('haku.views.base.ajax', haku.views.base.basic.type().extend({

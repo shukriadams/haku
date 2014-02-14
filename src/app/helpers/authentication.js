@@ -1,10 +1,10 @@
-var haku = haku || {};
-
 // ===========================================================================
 // Helper object which internally manages all logic for authentication
 // todo : move to own file
 // ---------------------------------------------------------------------------
 (function () {
+
+    'use strict';
 
     var type = function () {
         this._tokenprovider = haku.remote.tokenProviders.instance();
@@ -41,17 +41,16 @@ var haku = haku || {};
 } ());
 
 
-
-
-// ===========================================================================
-// Test stub for remote provider of an authentication token
-// todo : move to own file.
-// ---------------------------------------------------------------------------
 (function () {
+
+    'use strict';
+
     var type = function () {
 
     };
+
     type.prototype = function () { this.apply(this, arguments); };
+
     // todo : design error, token must be return via callback, not synchronously
     type.prototype.processLogin = function (name, password) {
         return haku.models.authTokens.instance({
@@ -69,9 +68,10 @@ var haku = haku || {};
 // ===========================================================================
 // Test stub to token storage. similar to general storage, might have to
 // refactor this out.
-// todo : move to own file.
 // ---------------------------------------------------------------------------
 (function () {
+
+    'use strict';
 
     var type = function () {
         this.token = null;

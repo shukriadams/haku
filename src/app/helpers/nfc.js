@@ -1,5 +1,7 @@
 (function(){
 
+    'use strict';
+
     /*
     // structure of tag item
 

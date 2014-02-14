@@ -1,5 +1,7 @@
 (function(){
 
+    'use strict';
+
     var type = function (args) {
         this.token = args.token ? args.token : "";
         this.userid = args.userid ? args.useid : "";

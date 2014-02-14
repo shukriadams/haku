@@ -2,6 +2,8 @@
 
 require(['haku'], function(){
 
+    'use strict';
+
     // ===========================================================================
     // Simple router to demonstrate application load. Requires an html document
     // with a body tag, which, is really not too much to ask.

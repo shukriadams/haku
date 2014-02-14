@@ -1,4 +1,4 @@
-(function(){
+require(['haku'], function(){
 
     'use strict';
 
@@ -35,6 +35,5 @@
         });
 
     });
-
 
 }());

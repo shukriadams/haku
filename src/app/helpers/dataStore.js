@@ -4,6 +4,8 @@
 // ---------------------------------------------------------------------------
 (function(){
 
+    'use strict';
+
     var type = function(options){
         var defaults = {
             // Tor testing purposes only. Allows us to force store object timestamps.

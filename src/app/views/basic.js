@@ -1,5 +1,7 @@
 (function(){
 
+    'use strict';
+
 	klon.register('haku.views.base.basic', Backbone.View.extend({
 
         // any text written to this will be outputted as view content, unless

@@ -1,4 +1,5 @@
 /*
+
  Namespaces reference
 
  haku.app;             Running instance of app. Global dependency, must be initialized. Starting app sets it.
@@ -12,9 +13,8 @@
  haku.remote. :                Types which represent calls on remote servers, normally external APIs or suchlike.
  haku.remote.tokenProviders. : Gets authentication tokens. IE, remote logging in happens here.
  haku.routers. :
-*/
 
-var haku = haku || {};
+*/
 
 (function () {
 

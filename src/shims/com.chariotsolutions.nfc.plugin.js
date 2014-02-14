@@ -52,8 +52,10 @@
 
                 // write data items to tag event
                 nfcEvent.tag.ndefMessage = [];
-                if (!items)
+                if (!items) {
                     items = [];
+                }
+
                 for (var i = 0 ; i < items.length ; i++){
                     nfcEvent.tag.ndefMessage.push({
                         id : [],

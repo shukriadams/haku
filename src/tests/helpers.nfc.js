@@ -1,4 +1,4 @@
-(function(){
+require(['haku'], function(){
 
     'use strict';
 
@@ -52,11 +52,6 @@
     asyncTest("Read tag", function () {
         require(["nfc"], function(){
 
-            nfc.shim.data = [
-                { type : "123", content : "321"},
-                { type : "abc", content : "cba"}
-            ];
-
             nfc.addNdefListener(
                 function(nfcEvent){
                     start();
@@ -73,7 +68,10 @@
             );
 
             // trigger a tag detection
-            nfc.shim.raiseDetect();
+            nfc.shim.raiseDetect([
+                { type : "123", content : "321"},
+                { type : "abc", content : "cba"}
+            ]);
 
         });
     });
