@@ -1,6 +1,7 @@
-/*
-These are standard "desktop" browser settings, intended for development use.
-*/
+// ===========================================================================
+// These are standard "desktop" browser settings, intended for development
+// use.
+// ---------------------------------------------------------------------------
 (function(){
 
     // ===========================================================================
