@@ -2,7 +2,9 @@
 // Recreates accelerometer object for org.apache.cordova.device-motion
 // ---------------------------------------------------------------------------
 (function(){
+
     klon.register("navigator.accelerometer");
+
     navigator.accelerometer.shim = {
         x : 0,
         y : 0,
@@ -17,34 +19,34 @@
         errorCallback : null,
 
         start : function(){
-            if (this.shim.timerId != null || this.shim.successCallback == null){
+            if (this.timerId != null || this.successCallback == null){
                 return;
             }
 
             var self = this;
-            this.shim.timerId = setInterval(function(){
+            this.timerId = setInterval(function(){
 
                 self.successCallback({
-                    x : self.shim.x,
-                    y : self.shim.y,
-                    z : self.shim.z
+                    x : self.x,
+                    y : self.y,
+                    z : self.z
                 })
             }, this.frequency);
 
         },
 
         stop : function(){
-            if (this.shim.timerId == null){
+            if (this.timerId == null){
                 return;
             }
 
-            clearInterval(this.shim.timerId);
-            this.shim.timerId = null;
+            clearInterval(this.timerId);
+            this.timerId = null;
         },
 
         raiseError : function(){
-            if (this.shim.errorCallback){
-                this.shim.errorCallback();
+            if (this.errorCallback){
+                this.errorCallback();
             }
         },
 
@@ -63,6 +65,5 @@
         this.shim.errorCallback = error;
         this.shim.frequency = options.frequency;
     };
-
 
 }());
