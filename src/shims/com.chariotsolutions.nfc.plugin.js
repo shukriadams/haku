@@ -52,6 +52,13 @@
 
                 // write data items to tag event
                 nfcEvent.tag.ndefMessage = [];
+
+                // if nothing passed in and local data is available, take local
+                if (!items && this.data){
+                    items = this.data;
+                }
+
+                // if no data is available at all, create empty array
                 if (!items) {
                     items = [];
                 }
