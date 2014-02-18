@@ -17,3 +17,4 @@ binary_builds/Eclipse debug project/Fortehwin/assets/*
 /sen.bat
 /src/tests/qunit.js
 /src/tests/qunit.css
+/compile_ios.bat

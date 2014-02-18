@@ -29,11 +29,9 @@ Coming soon
 - shims for standard camera hardware to emulate Phonegap drivers.
 
 
-Basic set up
+System set up
 ------------
-This will get you set up so you can get Haku running in a web browser, and compile your Haku application so it's ready to compile to a Phonegap app.
-
-Haku has the following system dependencies
+Haku has the following system dependencies 
 - Nodejs (for Bower and Grunt, installer from http://nodejs.org)
 - Ruby (for changing Foundation with Compass, installer at https://www.ruby-lang.org)
 - Bower : "npm install -g bower"
@@ -42,22 +40,20 @@ Haku has the following system dependencies
 - Foundation : "gem install foundation"
 
 
-Check out
----------
-Get the haku source files from https://github.com/shukriadams/haku and put them in your local work folder. In that folder, at the command prompt, run
-- "npm install" (sets up local Grunt modules)
-- "grunt --gruntfile deps.js" (gets dependencies like Backbone, and copies them to where they're needed)
+Haku set up
+-----------
+ - Create a folder for your new Haku project, say "MyHaku". Open a console window here.
+ - Run “bower install https://github.com/shukriadams/haku.git#master” 
+ - From  /bower_components/haku copy package.json and grunfile.js to your "MyHaku" folder. 
+ - Run “npm install” - this installs all node packages needed by Haku.
+ - Run “grunt” - this copies Haku’s files from bower_components/haku to "MyHaku/src", which is where you will be extending Haku
+ - Run “grunt --gruntfile deps.js”. This copies all dependencies from the various folders in bower_components to "MyHaku/src".
+ - Manually copy index.html from “bower_components/haku/src” to your work folder "MyHaku/src", and everything in “bower_components/haku/src/css-sass” to your "MyHaku/src/css-sass". This is a once-off copy process when you create your app.
+ - Serve haku from "MyHaku/src" with your favorite web server (we use python's SimpleHTTPServer)
+ 
 
-
-View
------
-Haku should now be ready to run in your browser
-- fire it up at /src/index.html
-- run tests with /src/tests/index.html
-
-
-Use
----
+Override
+--------
 A very simple example of an app. This uses Requirejs to manage view files, jQuery to trigger start, and everything else is standard Backbone router + views.
 
 	// jquery fires up app when the DOM has loaded, but any DOM loader will do
@@ -117,4 +113,4 @@ The files generated will behave the same as the ones you've viewed in /src, but 
 
 Building locally
 ----------------
-Please see phonegap.com for detailed build instructions.
+Please see phonegap.com for detailed build instructions. An example MSDOS build script for Android is included - run "build_phonegap_android_headless.bat MyHaku" to create an app called "MyHaku". This script is not intended for production use, but it should give you a good idea of how to set up the compilation process.
