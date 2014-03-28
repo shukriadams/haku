@@ -53,10 +53,16 @@ module.exports = function(grunt) {
           requireRoot: {
               src: [ targetFolder + '/app/haku.js'],
               dest: targetFolder + '/app/',
-              replacements: [{
-                  from: /haku.settings.systemPathRoot="\/"/g,
-                  to: 'haku.settings.systemPathRoot=window.location.pathname.replace("index.html", "");'
-              }]
+              replacements: [
+                  {
+                      from: /haku.settings.systemPathRoot='\/'/g,
+                      to: 'haku.settings.systemPathRoot=window.location.pathname.replace("index.html", "")'
+                  },
+                  {
+                      from: /haku.settings.launchMode='direct'/g,
+                      to: 'haku.settings.launchMode="onready"'
+                  }
+              ]
           },
 
           removeShims: {
