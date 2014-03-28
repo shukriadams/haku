@@ -7,9 +7,10 @@
 var haku = haku || {};
 haku.settings = haku.settings || {};
 haku.settings.launchMode='direct';
-haku.settings.systemPathRoot='/';
 
 document.addEventListener('deviceready', function(){
+
+    haku.settings.systemPathRoot='/';
 
     require.config({
         baseUrl: haku.settings.systemPathRoot,
