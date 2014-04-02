@@ -1,6 +1,10 @@
 {
   "name": "haku",
   "version": "0.0.2",
+  "repository" : {
+	  "type" : "git", 
+  	"url" : "https://github.com/shukriadams/haku.git"  	
+   },  
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-uglify": "~0.2.2",
