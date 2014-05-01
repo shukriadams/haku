@@ -1,6 +1,8 @@
 Haku
 ----
-Haku is a boilerplate for rapidly creating Phonegap applications. It has relatively few dependencies, and everything that made it in was chosen for size and performance.
+Haku is a boilerplate for rapidly creating Phonegap applications. It is an opinionated build script in that it consists
+of cherry-picked components, tied together in a way that is easy to reuse and extend. It is a framework in that its
+structure encourages code reuse.
 
 Haku
 - is implemented with Backbone; it provides a scaffold on which you can create your app as Backbone views.
@@ -54,11 +56,12 @@ Haku set up
 
 Override
 --------
-A very simple example of an app. This uses Requirejs to manage view files, jQuery to trigger start, and everything else is standard Backbone router + views.
+Extended Haku by adding code to /ext/app-custom.js.
+
+This is a simple example.
 
 	// jquery fires up app when the DOM has loaded, but any DOM loader will do
 	$(function(){
-
 
 		// override the haku application, add your own app logic	
 	    klon.register('haku.application', haku.application.type().extend({
