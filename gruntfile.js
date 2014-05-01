@@ -19,7 +19,7 @@ module.exports = function(grunt) {
       copy: {
           main: {
               files: [
-                  { expand: true, cwd : sourceFolder, src: ['**', '!**/src/index.html', '!**/src/css-sass/*', '!**/*.bat', '!**/src/ext/*' ] }
+                  { expand: true, cwd : sourceFolder, src: ['**', '!**/src/index.html', '!**/src/css-sass/*', '!**/*.bat' ] }
               ]
           }
       }
