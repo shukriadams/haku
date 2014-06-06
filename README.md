@@ -50,7 +50,7 @@ Haku set up
  - Run “npm install” - this installs all node packages needed by Haku.
  - Run “grunt” - this copies Haku’s files from bower_components/haku to "MyHaku/src", which is where you will be extending Haku
  - Run “grunt --gruntfile deps.js”. This copies all dependencies from the various folders in bower_components to "MyHaku/src".
- - Manually copy index.html from “bower_components/haku/src” to your work folder "MyHaku/src", and everything in “bower_components/haku/src/css-sass” to your "MyHaku/src/css-sass". This is a once-off copy process when you create your app.
+ - From “bower_components/haku/src” copy to your work folder's "src" folder the following : index.html, /css-sass/ and /ext/ . This is a once-off copy process when you create your app.
  - Serve haku from "MyHaku/src" with your favorite web server (we use python's SimpleHTTPServer)
  
 
