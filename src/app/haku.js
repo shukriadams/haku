@@ -15,21 +15,34 @@ document.addEventListener('deviceready', function(){
     require.config({
         baseUrl: haku.settings.systemPathRoot,
         paths: {
-            'extend': 'ext/app-custom', // your custom app's "main" initial loader must be placed in this file
-            'core': 'app/core',
-            'exception': 'app/models/exception',
-            'authentication': 'app/helpers/authentication',
-            'dataStore': 'app/helpers/dataStore',
-            'authToken' : 'app/models/authToken',
-            'view.ajax': 'app/views/ajax',
-            'view.basic': 'app/views/basic',
-            'settings': 'app/settings'
+            'backbone': '/3rdparty/backbone',
+            'underscore': '/3rdparty/underscore',
+            'ejs': '/3rdparty/ejs_production',
+            'jquery': '/3rdparty/jquery',
+            'klon': '/3rdparty/klon',
+            'modernizr': '/3rdparty/modernizr',
+            'foundation': '/3rdparty/foundation',
+
+            'extend': '/ext/app-custom', // your custom app's "main" initial loader must be placed in this file
+            'core': '/app/core',
+            'exception': '/app/models/exception',
+            'authentication': '/app/helpers/authentication',
+            'dataStore': '/app/helpers/dataStore',
+            'authToken' : '/app/models/authToken',
+            'view.ajax': '/app/views/ajax',
+            'view.basic': '/app/views/basic',
+            'settings': '/app/settings'
         },
         shim: {
-            'extend' : { deps : ['view.ajax']},
-            'view.ajax' : { deps : ['view.basic']},
-            'view.basic' : { deps : ['core']},
-            'core': { deps : [ 'exception', 'authentication', 'dataStore', 'authToken', 'settings'] }
+            'backbone' : { deps : ['underscore'] },
+            'foundation' : { deps : ['jquery'] },
+            'settings' : { deps : ['underscore'] },
+            'authentication' : { deps : ['underscore'] },
+            'core': { deps : [ 'backbone', 'ejs', 'klon', 'modernizr', 'foundation', 'exception', 'authentication', 'dataStore', 'authToken', 'settings'] },
+            'view.basic' : { deps : ['core'] },
+            'view.ajax' : { deps : ['view.basic'] },
+            'extend' : { deps : ['view.ajax'] },
+            
         }
     });
 

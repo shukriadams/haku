@@ -45,18 +45,25 @@ Haku has the following system dependencies
 Haku set up
 -----------
  - Create a folder for your new Haku project, say "MyHaku". Open a console window here.
- - Run “bower install https://github.com/shukriadams/haku.git#master” 
+ - Run "bower install https://github.com/shukriadams/haku.git#master" 
  - From  /bower_components/haku copy package.json and grunfile.js to your "MyHaku" folder. 
- - Run “npm install” - this installs all node packages needed by Haku.
- - Run “grunt” - this copies Haku’s files from bower_components/haku to "MyHaku/src", which is where you will be extending Haku
- - Run “grunt --gruntfile deps.js”. This copies all dependencies from the various folders in bower_components to "MyHaku/src".
- - From “bower_components/haku/src” copy to your work folder's "src" folder the following : index.html, /css-sass/ and /ext/ . This is a once-off copy process when you create your app.
- - Serve haku from "MyHaku/src" with your favorite web server (we use python's SimpleHTTPServer)
+ - Run "npm install" - this installs all node packages needed by Haku.
+ - Run "grunt init" - this does a bower get and copies Haku and 3rd party libs from /bower_components to "/MyHaku/src", which is where you will be extending Haku
+ - From /bower_components/haku/src copy to your work folder's "src" folder the following : index.html, /css-sass/ and /ext/ . This is a once-off copy process when you create your app.
+ - Serve haku from "MyHaku/src" with your favorite web server.
  
 
-Override
---------
-Extended Haku by adding code to /ext/app-custom.js.
+Haku update
+-----------
+- Run "grunt init" to download the latest version of haku and dependencies, and push these to your work folder. 
+WARNING : 
+You can automatically update all Haku and dependency files, BUT NOTE, all changes made to core Haku files will be overwritten. Your work in /ext and /css-sass folders WON'T be affected. Back everything up anyway though, just incase.
+You should do a manual comparison of index.html to make sure no important changes were introduced. If they were, these must be manually merged.
+
+
+Extending
+---------
+Extended Haku by adding code to /ext/app-custom.js. Haku is based on Backbone, so if you're used to that, you're set. 
 
 This is a simple example.
 
@@ -106,14 +113,14 @@ This is a simple example.
 
 
 
-Compile HTML
-------------
+Prepare for Phonegap
+--------------------
 From the project root
-- "grunt --gruntfile compile_X.js" (where X is the target platform) 
+- "grunt [platform]" (where [platform] is the target platform being built. Allowed options are : "android", "ios" or "web" ) 
 
-The files generated will behave the same as the ones you've viewed in /src, but will have platform-specific settings (if any) applied to them, as well as being minified. You can use these files for building a Phonegap binary for your target platform, either locally (see next section) or via a service like Adobe Build.
+The files generated will behave the same as the ones you've viewed in /src, but will have platform-specific settings (if any) applied to them, as well as being minified. You can use these files for building a Phonegap binary for your target platform, either locally (see next section) or via a service like Adobe Build. Haku also builds to vanilla web.
 
 
-Building locally
-----------------
+Compiling Phonegap binaries
+---------------------------
 Please see phonegap.com for detailed build instructions. An example MSDOS build script for Android is included - run "build_phonegap_android_headless.bat MyHaku" to create an app called "MyHaku". This script is not intended for production use, but it should give you a good idea of how to set up the compilation process.

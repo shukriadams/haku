@@ -10,10 +10,15 @@ module.exports = function(grunt) {
       console.log("gruntSettings.js not found, using default values.");
   }
 
+  // where bower will pull down haku and dependencies
   var bowerRoot = settings.bowerRoot ? settings.bowerRoot : "bower_components";
+  // where your working copy of haku will be set up. Change this if you want to nest haku in a folder with parent build logic of its own
   var srcRoot = settings.srcRoot ? settings.srcRoot : "src";
+  // where haku compiles and optimises final content for android apps. This content is Phonegap-ready.
   var androidSrcFolder = settings.androidSrcFolder ? settings.androidSrcFolder : "compile_android";
+  // where haku compiles and optimises final content for ios apps. This content is Phonegap-ready.
   var iosSrcFolder = settings.iosSrcFolder ? settings.iosSrcFolder : "compile_ios";
+  // where haku compiles and optimises final content for web apps. This content can run as public web apps.
   var webSrcFolder = settings.webSrcFolder ? settings.webSrcFolder : "compile_web";
 
 
@@ -34,11 +39,7 @@ module.exports = function(grunt) {
       copy: {
           init: {
               files: [
-                  { expand: true, cwd : bowerRoot + "/Haku/src", src: ['**', '!**/src/index.html', '!**/src/css-sass/*', '!**/*.bat' , '!**/src/ext/*'] }
-              ]
-          },
-          depend: {
-              files: [
+                  { expand: true, cwd : bowerRoot + "/Haku/src", src: ['**', '!**/src/index.html', '!**/src/css-sass/*', '!**/*.bat' , '!**/src/ext/*'], dest : srcRoot },
                   { src: [ bowerRoot + '/backbone/backbone.js'], dest : srcRoot + '/3rdparty/backbone.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/foundation/js/foundation.js'], dest : srcRoot + '/3rdparty/foundation.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/foundation/css/foundation.css'], dest : srcRoot + '/style/foundation.css', filter: 'isFile' },
@@ -73,7 +74,6 @@ module.exports = function(grunt) {
 
 
       clean:{
-        depend : [bowerRoot + '/klon'],    
         android : [
           androidSrcFolder + "/shims/disposable",
           androidSrcFolder + "/css-sass",
@@ -206,10 +206,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-text-replace');
 
-  // Default task(s).
-  grunt.registerTask('init', ['bower', 'copy:init']);
-  grunt.registerTask('depend', ['clean:depend', 'bower', 'copy:depend']);
+   grunt.registerTask('init', ['bower', 'copy:init']);
   grunt.registerTask('android', ['copy:android', 'uglify:android', 'cssmin:android', 'clean:android', 'replace:android_requireRoot', 'replace:android_removeShims']);
   grunt.registerTask('ios', ['copy:ios', 'uglify:ios', 'cssmin:ios', 'clean:ios', 'replace:ios_requireRoot', 'replace:ios_removeShims']);
   grunt.registerTask('web', ['copy:web', 'uglify:web', 'cssmin:web', 'clean:web']);
+
 };
