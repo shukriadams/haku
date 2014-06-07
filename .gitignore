@@ -22,3 +22,5 @@ binary_builds/Eclipse debug project/Fortehwin/assets/*
 /src/css/normalize.css
 /src/css/foundation-build.css
 /compile_ios
+/src/serve this.bat
+/src/start compass.bat
