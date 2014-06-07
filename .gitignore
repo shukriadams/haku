@@ -18,3 +18,7 @@ binary_builds/Eclipse debug project/Fortehwin/assets/*
 /src/tests/qunit.js
 /src/tests/qunit.css
 /compile_ios.bat
+/gruntSettings.js
+/src/css/normalize.css
+/src/css/foundation-build.css
+/compile_ios

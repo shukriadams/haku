@@ -23,7 +23,7 @@ GOTO :continue
 :: install everything
 :: ==============================================
 call npm install
-call grunt --gruntfile compile_android.js
+call grunt android
 
 
 
