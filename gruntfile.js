@@ -13,7 +13,9 @@ module.exports = function(grunt) {
   // where bower will pull down haku and dependencies
   var bowerRoot = settings.bowerRoot ? settings.bowerRoot : "bower_components";
   // where your working copy of haku will be set up. Change this if you want to nest haku in a folder with parent build logic of its own
-  var srcRoot = settings.srcRoot ? settings.srcRoot : "src";
+  var workDirectory = settings.workDirectory ? settings.workDirectory : "src";
+  // where the source to "compile" is placed. Normally identital to workDirectory value. Override to add extra build step.
+  var precompileDirectory = settings.precompileDirectory ? settings.precompileDirectory : "src";
   // where haku compiles and optimises final content for android apps. This content is Phonegap-ready.
   var androidSrcFolder = settings.androidSrcFolder ? settings.androidSrcFolder : "compile_android";
   // where haku compiles and optimises final content for ios apps. This content is Phonegap-ready.
@@ -39,35 +41,35 @@ module.exports = function(grunt) {
       copy: {
           init: {
               files: [
-                  { expand: true, cwd : bowerRoot + "/Haku/src", src: ['**', '!**/src/index.html', '!**/src/css-sass/*', '!**/*.bat' , '!**/src/ext/*'], dest : srcRoot },
-                  { src: [ bowerRoot + '/backbone/backbone.js'], dest : srcRoot + '/3rdparty/backbone.js', filter: 'isFile' },
-                  { src: [ bowerRoot + '/foundation/js/foundation.js'], dest : srcRoot + '/3rdparty/foundation.js', filter: 'isFile' },
-                  { src: [ bowerRoot + '/foundation/css/foundation.css'], dest : srcRoot + '/style/foundation.css', filter: 'isFile' },
-                  { src: [ bowerRoot + '/foundation/css/normalize.css'], dest : srcRoot + '/style/normalize.css', filter: 'isFile' },
-                  { src: [ bowerRoot + '/jquery/jquery.js'], dest : srcRoot + '/3rdparty/jquery.js', filter: 'isFile' },
-                  { src: [ bowerRoot + '/klon/index.js'], dest : srcRoot + '/3rdparty/klon.js', filter: 'isFile' },
-                  { src: [ bowerRoot + '/modernizr/modernizr.js'], dest : srcRoot + '/3rdparty/modernizr.js', filter: 'isFile' },
-                  { src: [ bowerRoot + '/requirejs/require.js'], dest : srcRoot + '/3rdparty/require.js', filter: 'isFile' },
-                  { src: [ bowerRoot + '/underscore/underscore.js'], dest : srcRoot + '/3rdparty/underscore.js', filter: 'isFile' },
-                  { src: [ bowerRoot + '/ejs/index.js'], dest : srcRoot + '/3rdparty/ejs_production.js', filter: 'isFile' },
-                  { expand: true, cwd : bowerRoot + '/qunit/qunit', src: ['**'], dest: srcRoot + '/tests' }
+                  { expand: true, cwd : bowerRoot + "/Haku/src", src: ['**', '!**/src/index.html', '!**/src/css-sass/*', '!**/*.bat' , '!**/src/ext/*'], dest : workDirectory },
+                  { src: [ bowerRoot + '/backbone/backbone.js'], dest : workDirectory + '/3rdparty/backbone.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/foundation/js/foundation.js'], dest : workDirectory + '/3rdparty/foundation.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/foundation/css/foundation.css'], dest : workDirectory + '/style/foundation.css', filter: 'isFile' },
+                  { src: [ bowerRoot + '/foundation/css/normalize.css'], dest : workDirectory + '/style/normalize.css', filter: 'isFile' },
+                  { src: [ bowerRoot + '/jquery/jquery.js'], dest : workDirectory + '/3rdparty/jquery.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/klon/index.js'], dest : workDirectory + '/3rdparty/klon.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/modernizr/modernizr.js'], dest : workDirectory + '/3rdparty/modernizr.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/requirejs/require.js'], dest : workDirectory + '/3rdparty/require.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/underscore/underscore.js'], dest : workDirectory + '/3rdparty/underscore.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/ejs/index.js'], dest : workDirectory + '/3rdparty/ejs_production.js', filter: 'isFile' },
+                  { expand: true, cwd : bowerRoot + '/qunit/qunit', src: ['**'], dest: workDirectory + '/tests' }
               ]
           },
           android: {
               files: [
-                  { expand: true, cwd : srcRoot, src: ['**'], dest: androidSrcFolder + '/' },
-                  { src: [ srcRoot + '/app/settings-android.js'], dest : androidSrcFolder + '/app/settings.js', filter: 'isFile' }
+                  { expand: true, cwd : precompileDirectory, src: ['**'], dest: androidSrcFolder + '/' },
+                  { src: [ precompileDirectory + '/app/settings-android.js'], dest : androidSrcFolder + '/app/settings.js', filter: 'isFile' }
               ]
           },
           ios: {
               files: [
-                  { expand: true, cwd : srcRoot, src: ['**'], dest: iosSrcFolder + '/' },
-                  { src: [ srcRoot + '/app/settings-ios.js'], dest : iosSrcFolder + '/app/settings.js', filter: 'isFile' }
+                  { expand: true, cwd : precompileDirectory, src: ['**'], dest: iosSrcFolder + '/' },
+                  { src: [ precompileDirectory + '/app/settings-ios.js'], dest : iosSrcFolder + '/app/settings.js', filter: 'isFile' }
               ]
           },
           web: {
               files: [
-                  {expand: true, cwd : srcRoot, src: ['**'], dest: webSrcFolder + '/'}
+                  {expand: true, cwd : precompileDirectory, src: ['**'], dest: webSrcFolder + '/'}
               ]
           }                             
       },
@@ -128,21 +130,21 @@ module.exports = function(grunt) {
       cssmin: {
         android: {
           expand: true,
-          cwd: srcRoot + '/css',
+          cwd: precompileDirectory + '/css',
           src: ['*.css', '!*.min.css'],
           dest: androidSrcFolder + '/css/',
           ext: '.css'
         },
         ios: {
           expand: true,
-          cwd: srcRoot + '/css',
+          cwd: precompileDirectory + '/css',
           src: ['*.css', '!*.min.css'],
           dest: iosSrcFolder + '/css/',
           ext: '.css'
         },
         web: {
             expand: true,
-            cwd: srcRoot + '/css',
+            cwd: precompileDirectory + '/css',
             src: ['*.css', '!*.min.css'],
             dest: webSrcFolder + '/css/',
             ext: '.css'
