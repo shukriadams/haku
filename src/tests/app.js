@@ -49,7 +49,7 @@ require(['haku'], function(){
 
     });
 
-
+/*
     // Tests that a minimal haku app can be initialized and started. Override
     test("tests app creation", function(){
         var root = $("<div style='display:none'></div>");
@@ -68,5 +68,5 @@ require(['haku'], function(){
 
         ok(root.html() === "test passed");
     });
-
+*/
 }());
