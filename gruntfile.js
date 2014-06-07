@@ -162,8 +162,8 @@ module.exports = function(grunt) {
 
         android_removeShims: {
             // clear all shim files of content, but leave empty files 
-            src: [ androidSrcFolder + '/shims/*.js'],
-            dest: androidSrcFolder + '/shims/',
+            src: [ androidSrcFolder + '/app/shims/*.js'],
+            dest: androidSrcFolder + '/app/shims/',
             replacements: [{
                 from: /.*/g,                   
                 to: ''
@@ -187,8 +187,8 @@ module.exports = function(grunt) {
 
         ios_removeShims: {
             // clear all shim files of content, but leave empty files 
-            src: [ iosSrcFolder + '/shims/*.js'],
-            dest: iosSrcFolder + '/shims/',
+            src: [ iosSrcFolder + '/app/shims/*.js'],
+            dest: iosSrcFolder + '/app/shims/',
             replacements: [{
                 from: /.*/g,                   
                 to: ''
