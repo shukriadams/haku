@@ -36,8 +36,11 @@ document.addEventListener('deviceready', function(){
         shim: {
             'backbone' : { deps : ['underscore'] },
             'foundation' : { deps : ['jquery'] },
-            'settings' : { deps : ['underscore'] },
-            'authentication' : { deps : ['underscore'] },
+            'settings' : { deps : ['klon', 'underscore'] },
+            'authentication' : { deps : ['klon', 'backbone'] },
+            'dataStore' : { deps : ['underscore', 'klon'] },
+            'exception' : { deps : ['klon'] },
+            'authToken' : { deps : ['klon', 'underscore'] },
             'core': { deps : [ 'backbone', 'ejs', 'klon', 'modernizr', 'foundation', 'exception', 'authentication', 'dataStore', 'authToken', 'settings'] },
             'view.basic' : { deps : ['core'] },
             'view.ajax' : { deps : ['view.basic'] },
