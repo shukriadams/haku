@@ -41,7 +41,7 @@ module.exports = function(grunt) {
       copy: {
           init: {
               files: [
-                  { expand: true, cwd : bowerRoot + "/Haku/src", src: ['**', '!**/src/index.html', '!**/src/css-sass/*', '!**/*.bat' , '!**/src/ext/*'], dest : workDirectory },
+                  { expand: true, cwd : bowerRoot + "/Haku/src", src: ['**', '!index.html', '!css-sass/**/*', '!*.bat' , '!ext/**/*'], dest : workDirectory },
                   { src: [ bowerRoot + '/backbone/backbone.js'], dest : workDirectory + '/3rdparty/backbone.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/foundation/js/foundation.js'], dest : workDirectory + '/3rdparty/foundation.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/foundation/css/foundation.css'], dest : workDirectory + '/style/foundation.css', filter: 'isFile' },
