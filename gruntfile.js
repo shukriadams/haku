@@ -143,6 +143,17 @@ module.exports = function(grunt) {
       },
 
 
+      compass: {
+        default: {
+          options: {
+            importPath : precompileDirectory + "/../bower_components/foundation/scss",
+            sassDir: precompileDirectory + '/css-sass',
+            cssDir : precompileDirectory + '/css',
+          }
+        }
+      },
+
+
       cssmin: {
         android: {
           expand: true,
@@ -231,16 +242,16 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-text-replace');
   grunt.loadNpmTasks('grunt-hub');
-
+  grunt.loadNpmTasks('grunt-contrib-compass');
 
   // set up tasks
-  var androidTasks = ['copy:android', 'uglify:android', 'cssmin:android', 'clean:android', 'replace:android_requireRoot', 'replace:android_removeShims'];
+  var androidTasks = ['copy:android', 'uglify:android', 'compass', 'cssmin:android', 'clean:android', 'replace:android_requireRoot', 'replace:android_removeShims'];
   if (precompileGruntTask) androidTasks.unshift('hub:precompileRun');
 
-  var iosTasks = ['copy:ios', 'uglify:ios', 'cssmin:ios', 'clean:ios', 'replace:ios_requireRoot', 'replace:ios_removeShims'];
+  var iosTasks = ['copy:ios', 'uglify:ios', 'compass', 'cssmin:ios', 'clean:ios', 'replace:ios_requireRoot', 'replace:ios_removeShims'];
   if (precompileGruntTask) iosTasks.unshift('hub:precompileRun');
 
-  var webTasks = ['copy:web', 'uglify:web', 'cssmin:web', 'clean:web'];
+  var webTasks = ['copy:web', 'uglify:web', 'compass', 'cssmin:web', 'clean:web'];
   if (precompileGruntTask) webTasks.unshift('hub:precompileRun');
 
   grunt.registerTask('init', ['bower', 'copy:init']);
