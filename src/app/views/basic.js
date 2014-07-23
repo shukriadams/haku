@@ -8,6 +8,18 @@
         // this.template is set, in which case template is used instead.
         html : "",
 
+        // object will be bound to template
+        templateData : null,
+
+        template : null,
+
+        options : null,
+
+        initialize : function(options){
+            _.extend(this, options);
+            this.options = options;
+        },
+
         transitionIn: function (callback) {
 
             var view = this;
@@ -43,7 +55,7 @@
             this.loadTemplate();
 
             if (this.template){
-                this.html = this.template();
+                this.html = this.template(this.templateData);
             }
 
             this.$el.html(this.html);
