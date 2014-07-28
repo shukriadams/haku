@@ -34,7 +34,7 @@ document.addEventListener('deviceready', function(){
             'settings': '/app/settings'
         },
         shim: {
-            'backbone' : { deps : ['underscore'] },
+            'backbone' : { deps : ['underscore', 'jquery'] },
             'foundation' : { deps : ['jquery'] },
             'settings' : { deps : ['klon', 'underscore'] },
             'authentication' : { deps : ['klon', 'backbone'] },
