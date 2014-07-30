@@ -9,6 +9,7 @@ haku.settings = haku.settings || {};
 haku.settings.launchMode='direct';
 haku.settings.sendConsoleToScreen=false;
 
+
 // force console dump to dom
 if (haku.settings.sendConsoleToScreen) {
     var c = document.getElementById("haku-console");
@@ -32,6 +33,7 @@ if (haku.settings.sendConsoleToScreen) {
     })();
 }
 
+
 document.addEventListener('deviceready', function(){
 
     haku.settings.systemPathRoot='/';
@@ -39,23 +41,23 @@ document.addEventListener('deviceready', function(){
     require.config({
         baseUrl: haku.settings.systemPathRoot,
         paths: {
-            'backbone': '/3rdparty/backbone',
-            'underscore': '/3rdparty/underscore',
-            'ejs': '/3rdparty/ejs_production',
-            'jquery': '/3rdparty/jquery',
-            'klon': '/3rdparty/klon',
-            'modernizr': '/3rdparty/modernizr',
-            'foundation': '/3rdparty/foundation',
+            'backbone': '3rdparty/backbone',
+            'underscore': '3rdparty/underscore',
+            'ejs': '3rdparty/ejs_production',
+            'jquery': '3rdparty/jquery',
+            'klon': '3rdparty/klon',
+            'modernizr': '3rdparty/modernizr',
+            'foundation': '3rdparty/foundation',
 
-            'extend': '/ext/app-custom', // your custom app's "main" initial loader must be placed in this file
-            'core': '/app/core',
-            'exception': '/app/models/exception',
-            'authentication': '/app/helpers/authentication',
-            'dataStore': '/app/helpers/dataStore',
-            'authToken' : '/app/models/authToken',
-            'view.ajax': '/app/views/ajax',
-            'view.basic': '/app/views/basic',
-            'settings': '/app/settings'
+            'extend': 'ext/app-custom', // your custom app's "main" initial loader must be placed in this file
+            'core': 'app/core',
+            'exception': 'app/models/exception',
+            'authentication': 'app/helpers/authentication',
+            'dataStore': 'app/helpers/dataStore',
+            'authToken' : 'app/models/authToken',
+            'view.ajax': 'app/views/ajax',
+            'view.basic': 'app/views/basic',
+            'settings': 'app/settings'
         },
         shim: {
             'backbone' : { deps : ['underscore', 'jquery'] },
@@ -68,8 +70,7 @@ document.addEventListener('deviceready', function(){
             'core': { deps : [ 'backbone', 'ejs', 'klon', 'modernizr', 'foundation', 'exception', 'authentication', 'dataStore', 'authToken', 'settings'] },
             'view.basic' : { deps : ['core'] },
             'view.ajax' : { deps : ['view.basic'] },
-            'extend' : { deps : ['view.ajax'] },
-            
+            'extend' : { deps : ['view.ajax'] }
         }
     });
 
