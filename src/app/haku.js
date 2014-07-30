@@ -7,6 +7,30 @@
 var haku = haku || {};
 haku.settings = haku.settings || {};
 haku.settings.launchMode='direct';
+haku.settings.sendConsoleToScreen=false;
+
+// force console dump to dom
+if (haku.settings.sendConsoleToScreen) {
+    var c = document.getElementById("haku-console");
+    if (c === null){
+        c = document.createElement("div");
+        document.body.appendChild(c);
+    }
+
+    (function () {
+        var oldLog = console.log;
+        console.log = function (message) {
+            try {
+                var div = document.createElement("div");
+                div.innerHTML = message;
+            } catch (err) {
+                // trap
+            }
+            c.appendChild(div);
+            oldLog.apply(console, arguments);
+        };
+    })();
+}
 
 document.addEventListener('deviceready', function(){
 
