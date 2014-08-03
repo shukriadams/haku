@@ -27,8 +27,10 @@ module.exports = function(grunt) {
   var webTargetFolder = settings.webTargetFolder ? settings.webTargetFolder : "compile_web";
 
   // use to assign an external grunt task prior to compiling for platform. Task must be in [workDirectory]/Gruntfile.js. Leave blank to skip.
-  var precompileGrunt = null;
-  var precompileGruntTask = null;
+  var precompileGrunt = null,
+      fs = require('fs'),
+      initCopyArgs = ['**',  '!*.bat'],
+	    precompileGruntTask = null;
 
   if(settings.precompileGrunt) {
     var args = settings.precompileGrunt.split(' ');
@@ -39,6 +41,15 @@ module.exports = function(grunt) {
     precompileGrunt = args[0];
     precompileGruntTask = args[1];
   }
+  
+  // copy sass folder if it doesn't exist
+  if (fs.existsSync(workDirectory + "/css-sass")) {
+    initCopyArgs.push('!css-sass/**/*')
+  } 
+  // copy ext folder if it doesn't exist
+  if (fs.existsSync(workDirectory + "/ext")) {
+    initCopyArgs.push('!ext/**/*')
+  } 
 
 
   // Project configuration.
@@ -58,7 +69,7 @@ module.exports = function(grunt) {
       copy: {
           init: {
               files: [
-                  { expand: true, cwd : bowerRoot + "/Haku/src", src: ['**', '!index.html', '!css-sass/**/*', '!*.bat' , '!ext/**/*'], dest : workDirectory },
+                  { expand: true, cwd : bowerRoot + "/Haku/src", src: initCopyArgs, dest : workDirectory },
                   { src: [ bowerRoot + '/backbone/backbone.js'], dest : workDirectory + '/3rdparty/backbone.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/foundation/js/foundation.js'], dest : workDirectory + '/3rdparty/foundation.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/foundation/css/normalize.css'], dest : workDirectory + '/css/normalize.css', filter: 'isFile' },
@@ -235,14 +246,18 @@ module.exports = function(grunt) {
 
   });
 
+
+
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-bower-task');
-  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-text-replace');
   grunt.loadNpmTasks('grunt-hub');
   grunt.loadNpmTasks('grunt-contrib-compass');
+
+
 
   // set up tasks
   var androidTasks = ['copy:android', 'uglify:android', 'compass', 'cssmin:android', 'clean:android', 'replace:android_requireRoot', 'replace:android_removeShims'];

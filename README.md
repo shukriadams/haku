@@ -27,8 +27,6 @@ Coming soon
 -----------
 - automated Adobe Build integration
 - better build support on non-Windows systems.
-- a kitchen sink demo project.
-- shims for standard camera hardware to emulate Phonegap drivers.
 
 
 System set up
@@ -46,24 +44,23 @@ Haku set up
 -----------
  - Create a folder for your new Haku project, say "MyHaku". Open a console window here.
  - Run "bower install https://github.com/shukriadams/haku.git#master" 
- - From  /bower_components/haku copy package.json and grunfile.js to your "MyHaku" folder. 
- - Run "npm install" - this installs all node packages needed by Haku.
- - Run "grunt init" - this does a bower get and copies Haku and 3rd party libs from /bower_components to "/MyHaku/src", which is where you will be extending Haku
- - From /bower_components/haku/src copy to your work folder's "src" folder the following : index.html, /css-sass/ and /ext/ . This is a once-off copy process when you create your app.
+ - From  /bower_components/haku copy package.json, grunfile.js & bower.json to your "MyHaku" folder. 
+ - Run "npm install" to install all required node packages.
+ - Run "grunt init" to set everything else up
  - Serve haku from "MyHaku/src" with your favorite web server.
  
 
 Haku update
 -----------
-- Run "grunt init" to download the latest version of haku and dependencies, and push these to your work folder. 
-WARNING : 
-You can automatically update all Haku and dependency files, BUT NOTE, all changes made to core Haku files will be overwritten. Your work in /ext and /css-sass folders WON'T be affected. Back everything up anyway though, just incase.
-You should do a manual comparison of index.html to make sure no important changes were introduced. If they were, these must be manually merged.
+Keep your Haku files up-to-date. From your "MyHaku" folder
+- Run "bower install https://github.com/shukriadams/haku.git#master" 
+- Run "grunt init" 
 
 
 Extending
 ---------
-Extended Haku by adding code to /ext/app-custom.js. Haku is based on Backbone, so if you're used to that, you're set. 
+Haku is mostly left alone to do its own thing. You in turn do all your work in the /ext folder, which Haku will not 
+updated after first being installed. Haku hooks into your code by expecting to find /ext/app-custom.js ; from within this file, use require.js to load your own files, and tell Haku to start. Haku is based on Backbone, so if you're used to that, you're set. 
 
 This is a simple example.
 
