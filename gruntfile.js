@@ -30,7 +30,7 @@ module.exports = function(grunt) {
   var precompileGrunt = null,
       fs = require('fs'),
       initCopyArgs = ['**',  '!*.bat'],
-	    precompileGruntTask = null;
+      precompileGruntTask = null;
 
   if(settings.precompileGrunt) {
     var args = settings.precompileGrunt.split(' ');
@@ -69,7 +69,10 @@ module.exports = function(grunt) {
       copy: {
           init: {
               files: [
-                  { expand: true, cwd : bowerRoot + "/Haku/src", src: initCopyArgs, dest : workDirectory },
+                  { expand: true, cwd : bowerRoot + '/Haku/src', src: initCopyArgs, dest : workDirectory },
+                  { src: [ bowerRoot + '/Haku/gruntfile.js'], dest : __dirname + '/gruntfile.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/Haku/package.js'], dest : __dirname + '/package.js' , filter: 'isFile' },
+                  { src: [ bowerRoot + '/Haku/bower.js'], dest : __dirname + '/bower.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/backbone/backbone.js'], dest : workDirectory + '/3rdparty/backbone.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/foundation/js/foundation.js'], dest : workDirectory + '/3rdparty/foundation.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/foundation/css/normalize.css'], dest : workDirectory + '/css/normalize.css', filter: 'isFile' },
@@ -157,7 +160,7 @@ module.exports = function(grunt) {
       compass: {
         default: {
           options: {
-            importPath : precompileDirectory + "/../bower_components/foundation/scss",
+            importPath : precompileDirectory + '/../bower_components/foundation/scss',
             sassDir: precompileDirectory + '/css-sass',
             cssDir : precompileDirectory + '/css',
           }
