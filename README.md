@@ -52,9 +52,10 @@ Haku set up
 
 Haku update
 -----------
-Keep your Haku files up-to-date. From your "MyHaku" folder
+You can keep your Haku files up-to-date - from your "MyHaku" folder
 - Run "bower install https://github.com/shukriadams/haku.git#master" 
-- Run "grunt init" 
+- Run "grunt init"
+Nothing in your /ext and /css-sass folders will be touched, but it's suggested that you stash your work anyway.
 
 
 Extending
@@ -121,3 +122,19 @@ The files generated will behave the same as the ones you've viewed in /src, but 
 Compiling Phonegap binaries
 ---------------------------
 Please see phonegap.com for detailed build instructions. An example MSDOS build script for Android is included - run "build_phonegap_android_headless.bat MyHaku" to create an app called "MyHaku". This script is not intended for production use, but it should give you a good idea of how to set up the compilation process.
+
+
+Go deeper
+---------
+Haku is essentially a buildable mobile app with its own build script. However, if you want to build something really complex inside of it, you'll probably want to set up your own build scripts too. You can get Haku to call these when it builds.
+
+Create a gruntSettings.js file in your "MyHaku" folder. In it, add the lines
+
+   exports.precompileGrunt = "mySubfolder/myGruntfile.js myTask";
+   exports.workDirectory = "mySubfolder/src";
+   exports.precompileDirectory = "mySubfolder/precompile";
+
+Then inside of "mySubfolder", create your own script grunt script(s). 
+Run "grunt init" from inside "MyHaku". Haku will unpack itself inside of "mySubfolder/src", which will become your new work root.
+
+Now let's build Haku for the web - from "MyHaku", run "Grunt web". Haku will call "mySubfolder/myGruntfile.js myTask" (mytask is optional). Make sure your own grunt script dumps its final output in "mySubfolder/precompile". Haku will pick up everything here and continue its web build.
