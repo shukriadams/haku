@@ -25,3 +25,4 @@ binary_builds/Eclipse debug project/Fortehwin/assets/*
 /src/serve this.bat
 /src/start compass.bat
 /.sass-cache
+/_gruntSettings.js
