@@ -130,9 +130,9 @@ Haku is essentially a buildable mobile app with its own build script. However, i
 
 Create a gruntSettings.js file in your "MyHaku" folder. In it, add the lines
 
-   exports.precompileGrunt = "mySubfolder/myGruntfile.js myTask";
-   exports.workDirectory = "mySubfolder/src";
-   exports.precompileDirectory = "mySubfolder/precompile";
+	exports.precompileGrunt = "mySubfolder/myGruntfile.js myTask";
+	exports.workDirectory = "mySubfolder/src";
+	exports.precompileDirectory = "mySubfolder/precompile";
 
 Then inside of "mySubfolder", create your own script grunt script(s). 
 Run "grunt init" from inside "MyHaku". Haku will unpack itself inside of "mySubfolder/src", which will become your new work root.
