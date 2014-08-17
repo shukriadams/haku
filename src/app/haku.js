@@ -36,7 +36,7 @@ if (haku.settings.sendConsoleToScreen) {
 
 document.addEventListener('deviceready', function(){
 
-    haku.settings.systemPathRoot='/';
+    haku.settings.systemPathRoot="/";
 
     require.config({
         baseUrl: haku.settings.systemPathRoot,
