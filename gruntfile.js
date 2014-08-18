@@ -219,7 +219,7 @@ module.exports = function(grunt) {
             dest: iosTargetFolder + '/app/',
             replacements: [
                 {
-                    from: /haku.settings.systemPathRoot="\/"/g,
+                    from: /haku.settings.systemPathRoot='\/'/g,
                     to: 'haku.settings.systemPathRoot=window.location.pathname.replace("index.html", "")'
                 },
                 {
@@ -273,9 +273,26 @@ module.exports = function(grunt) {
   var webTasks = ['copy:web', 'uglify:web', 'compass', 'cssmin:web', 'clean:web'];
   if (precompileGruntTask) webTasks.unshift('hub:precompileRun');
 
+  // set up debug tasks
+  var androidDebug = androidTasks.slice(); // copy array
+  removeItem(androidDebug, "uglify:android");
+  removeItem(androidDebug, "cssmin:android");
+
+  var iosDebug = iosTasks.slice();
+  removeItem(iosDebug, "uglify:ios");
+  removeItem(iosDebug, "clean:ios");
+  
+  function removeItem(arr, item){
+    var index = arr.indexOf(item);
+  if (index !== -1)
+    arr.splice(index, 1);
+  }
+
   grunt.registerTask('init', ['bower', 'copy:init']);
+  grunt.registerTask('android-debug', androidDebug);
   grunt.registerTask('android', androidTasks);
   grunt.registerTask('ios', iosTasks);
+  grunt.registerTask('ios-debug', removeItem);
   grunt.registerTask('web', webTasks);
 
 };
