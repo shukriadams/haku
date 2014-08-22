@@ -137,21 +137,24 @@ module.exports = function(grunt) {
           files: [
             { cwd: androidTargetFolder + '/3rdparty', src: '**/*.js', dest:  androidTargetFolder + '/3rdparty', expand: true },
             { cwd: androidTargetFolder + '/app', src: '**/*.js', dest: androidTargetFolder + '/app', expand: true },
-            { cwd: androidTargetFolder + '/views', src: '**/*.js', dest: androidTargetFolder + '/views', expand: true }
+            { cwd: androidTargetFolder + '/views', src: '**/*.js', dest: androidTargetFolder + '/views', expand: true },
+            { cwd: androidTargetFolder + '/ext', src: '**/*.js', dest: androidTargetFolder + '/ext', expand: true }
           ]
         },
         ios: {
           files: [
             { cwd: iosTargetFolder + '/3rdparty', src: '**/*.js', dest:  iosTargetFolder + '/3rdparty', expand: true },
             { cwd: iosTargetFolder + '/app', src: '**/*.js', dest: iosTargetFolder + '/app', expand: true },
-            { cwd: iosTargetFolder + '/views', src: '**/*.js', dest: iosTargetFolder + '/views', expand: true }
+            { cwd: iosTargetFolder + '/views', src: '**/*.js', dest: iosTargetFolder + '/views', expand: true },
+            { cwd: iosTargetFolder + '/ext', src: '**/*.js', dest: iosTargetFolder + '/ext', expand: true }
           ]
         },
         web: {
             files: [
-                {cwd: webTargetFolder + '/3rdparty', src: '**/*.js', dest:  webTargetFolder + '/3rdparty', expand: true},
-                {cwd: webTargetFolder + '/app', src: '**/*.js', dest: webTargetFolder + '/app', expand: true},
-                {cwd: webTargetFolder + '/views', src: '**/*.js', dest: webTargetFolder + '/views', expand: true}
+                { cwd: webTargetFolder + '/3rdparty', src: '**/*.js', dest:  webTargetFolder + '/3rdparty', expand: true },
+                { cwd: webTargetFolder + '/app', src: '**/*.js', dest: webTargetFolder + '/app', expand: true },
+                { cwd: webTargetFolder + '/views', src: '**/*.js', dest: webTargetFolder + '/views', expand: true },
+                { cwd: webTargetFolder + '/ext', src: '**/*.js', dest: webTargetFolder + '/ext', expand: true }
             ]
         }                
       },
