@@ -76,7 +76,7 @@ module.exports = function(grunt) {
                   { src: [ bowerRoot + '/backbone/backbone.js'], dest : workDirectory + '/3rdparty/backbone.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/foundation/js/foundation.js'], dest : workDirectory + '/3rdparty/foundation.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/foundation/css/normalize.css'], dest : workDirectory + '/css/normalize.css', filter: 'isFile' },
-                  { src: [ bowerRoot + '/jquery/jquery.js'], dest : workDirectory + '/3rdparty/jquery.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/jquery/dist/jquery.js'], dest : workDirectory + '/3rdparty/jquery.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/klon/index.js'], dest : workDirectory + '/3rdparty/klon.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/modernizr/modernizr.js'], dest : workDirectory + '/3rdparty/modernizr.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/requirejs/require.js'], dest : workDirectory + '/3rdparty/require.js', filter: 'isFile' },
