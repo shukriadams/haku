@@ -3,6 +3,8 @@
 // ---------------------------------------------------------------------------
 (function(){
 
+    "use strict";
+
     var Camera =  {
         DestinationType : {
             DATA_URL : 0,   // Return image as base64 encoded string

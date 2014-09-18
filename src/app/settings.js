@@ -16,7 +16,8 @@
     _.extend(haku.settings, {
         launchMode : "direct",
         systemPathRoot : "/",
-        platform : "browser"
+        platform : "browser",
+        enableLoader : false
     });
 
 }());

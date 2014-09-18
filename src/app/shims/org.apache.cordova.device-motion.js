@@ -3,6 +3,8 @@
 // ---------------------------------------------------------------------------
 (function(){
 
+    "use strict";
+
     klon.register("navigator.accelerometer");
 
     navigator.accelerometer.shim = {

@@ -17,6 +17,8 @@
 
     }));
 
+    // regardless of how you implement your app, you still need to create a haku
+    // app instance and start it.
     var app = haku.application.instance();
     app.start();
 

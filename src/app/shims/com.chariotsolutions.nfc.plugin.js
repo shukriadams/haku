@@ -5,6 +5,8 @@
 // ---------------------------------------------------------------------------
 (function(){
 
+    "use strict";
+
     // replica of nfcEvent raised when tag is read by device.
     var nfcEvent = {
         tag : {

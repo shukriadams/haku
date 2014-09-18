@@ -6,7 +6,7 @@ require(['haku'], function(){
         setup: function () {
             require.config({
                 paths : {
-                    'accelerometer' : '../shims/org.apache.cordova.device-motion'
+                    'accelerometer' : '../app/shims/org.apache.cordova.device-motion'
                 }
             });
         },

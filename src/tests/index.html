@@ -1,40 +1,48 @@
-<!DOCTYPE html>
-<html>
- <head>
+<head>
     <title>Haku tests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- start:haku css:!reserved! -->
+    <link rel="stylesheet" href="../css/foundation-build.css" />
+    <link rel="stylesheet" href="../css/normalize.css" />
+    <!-- end:haku css:!reserved! -->
+
     <link rel="stylesheet" href="qunit.css" />
+</head>
 
- </head>
- <body id="body">
-    <h1 id="qunit-header">Haku tests</h1>
-    <h2 id="qunit-banner"></h2>
-    <div id="qunit-testrunner-toolbar"></div>
-    <h2 id="qunit-userAgent"></h2>
-    <ol id="qunit-tests"></ol>
-    <div id="qunit-fixture">test markup, will be hidden</div>
-</body>
- <!-- Note : due a bug in foundation (5.0.0ish) foundation must be included after  -->
- <script type="text/javascript" src="../3rdparty/jquery.js"></script>
- <script type="text/javascript" src="../3rdparty/klon.js"></script>
- <script type="text/javascript" src="../3rdparty/underscore.js"></script>
- <script type="text/javascript" src="../3rdparty/backbone.js"></script>
- <script type="text/javascript" src="../3rdparty/ejs_production.js"></script>
- <script type="text/javascript" src="../3rdparty/modernizr.js"></script>
- <script type="text/javascript" src="../3rdparty/foundation.js"></script>
- <script type="text/javascript" src="../3rdparty/require.js"></script>
+    <body id="body">
+        <h1 id="qunit-header">Haku tests</h1>
+        <h2 id="qunit-banner"></h2>
+        <div id="qunit-testrunner-toolbar"></div>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+        <div id="qunit-fixture">test markup, will be hidden</div>
 
- <script type="text/javascript" src="../app/haku.js"></script>
+        <div class="app">
+            <div id="deviceready">
+                <div data-layout-role="root"></div>
+            </div>
+        </div>
+        <div id="haku-console"></div>
+    </body>
 
- <script type="text/javascript" src="qunit.js"></script>
+    <!-- start:haku scripts:!reserved! -->
+    <script type="text/javascript" src="../cordova.js"></script>
+    <script data-main="../app/haku"  src="../3rdparty/require.js"></script>
+    <!-- start:haku scripts:!reserved! -->
 
- <script type="text/javascript" src="typeDeclarations.js"></script>
- <script type="text/javascript" src="app.js"></script>
- <script type="text/javascript" src="view.base.basic.js"></script>
- <script type="text/javascript" src="view.base.ajax.js"></script>
- <script type="text/javascript" src="helpers.dataStores.js"></script>
- <script type="text/javascript" src="org.apache.cordova.camera.js"></script>
- <script type="text/javascript" src="helpers.nfc.js"></script>
- <script type="text/javascript" src="org.apache.cordova.device-motion.js"></script>
- <script type="text/javascript" src="com.chariotsolutions.nfc.plugin.js"></script>
+     <script type="text/javascript" src="qunit.js"></script>
+     <script type="text/javascript" src="typeDeclarations.js"></script>
+     <script type="text/javascript" src="app.js"></script>
+     <script type="text/javascript" src="view.base.basic.js"></script>
+     <script type="text/javascript" src="view.base.ajax.js"></script>
+     <script type="text/javascript" src="helpers.dataStores.js"></script>
+
+    <script type="text/javascript" src="org.apache.cordova.camera.js"></script>
+    <script type="text/javascript" src="com.chariotsolutions.nfc.plugin.js"></script>
+
+     <script type="text/javascript" src="helpers.nfc.js"></script>
+     <script type="text/javascript" src="org.apache.cordova.device-motion.js"></script>
+
 
 </html>

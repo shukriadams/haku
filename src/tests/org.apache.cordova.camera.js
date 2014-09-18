@@ -6,7 +6,7 @@ require(['haku'], function(){
         setup: function () {
             require.config({
                 paths : {
-                    'camera' : '../shims/org.apache.cordova.camera'
+                    'camera' : '../app/shims/org.apache.cordova.camera'
                 }
             });
         },

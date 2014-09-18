@@ -7,7 +7,7 @@ require(['haku'], function(){
             require.config({
                 paths : {
                     'nfc' : '../app/helpers/nfc',
-                    'shim' : '../shims/com.chariotsolutions.nfc.plugin'
+                    'shim' : '../app/shims/com.chariotsolutions.nfc.plugin'
                 },
                 shim : {
                     'nfc' : { deps : [ 'shim']}
