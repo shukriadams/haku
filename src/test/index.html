@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="qunit.css" />
 </head>
 
-    <body id="body">
+    <body id="body" data-haku-extendPath="test/testLoader" data-haku-launchMode="none">
         <h1 id="qunit-header">Haku tests</h1>
         <h2 id="qunit-banner"></h2>
         <div id="qunit-testrunner-toolbar"></div>
@@ -28,21 +28,7 @@
 
     <!-- start:haku scripts:!reserved! -->
     <script type="text/javascript" src="../cordova.js"></script>
-    <script data-main="../app/haku"  src="../3rdparty/require.js"></script>
+    <script data-main="../app/haku"  src="../lib/require.js"></script>
     <!-- start:haku scripts:!reserved! -->
-
-     <script type="text/javascript" src="qunit.js"></script>
-     <script type="text/javascript" src="typeDeclarations.js"></script>
-     <script type="text/javascript" src="app.js"></script>
-     <script type="text/javascript" src="view.base.basic.js"></script>
-     <script type="text/javascript" src="view.base.ajax.js"></script>
-     <script type="text/javascript" src="helpers.dataStores.js"></script>
-
-    <script type="text/javascript" src="org.apache.cordova.camera.js"></script>
-    <script type="text/javascript" src="com.chariotsolutions.nfc.plugin.js"></script>
-
-     <script type="text/javascript" src="helpers.nfc.js"></script>
-     <script type="text/javascript" src="org.apache.cordova.device-motion.js"></script>
-
 
 </html>

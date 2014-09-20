@@ -6,26 +6,29 @@
         PERSISTENT  : "PERSISTENT"
     };
 
-    var filesystem = {
+    // Note that phonegap's filesystem is not attached to window as a global.
+    // For shimming purposes however it is appended there to make it easier to retrieve.
+    window.filesystem = {
         shim : {
             failOnGetFile : false,
             failOnRemoveFile : false,
             failOnGetDirectory : false,
+            failOnFileExistsCheck : true,
             // shim. returned DirectoryReader.readEntries
             files : []
         },
 
         root : {
             getFile : function(fileName, someVar, success, fail) {
-                if (filesystem.failOnGetFile)
+                if (filesystem.shim.failOnGetFile)
                     fail();
                 else
-                    success(new File(name));
+                    success(new File(fileName));
             },
             getDirectory : function(path, args, success, fail){
-                if (filesystem.failOnGetDirectory)
+                if (filesystem.shim.failOnGetDirectory && fail)
                     fail();
-                else
+                else if(success)
                     success();
             }
         }
@@ -37,6 +40,7 @@
      */
     var File = function(name){
         this.name = name;
+        this.fullPath = name;
     };
 
     File.prototype.remove = function(success, fail){
@@ -49,9 +53,9 @@
             }
         }
 
-        if (filesystem.failOnRemoveFile)
+        if (filesystem.shim.failOnRemoveFile && fail)
             fail();
-        else
+        else if (success)
             success();
     };
 
@@ -105,20 +109,17 @@
      *
      */
     window.FileReader = function(){
-
+        this.onloadend = null; // this must be invoked on read.
     };
     window.FileReader.prototype.readAsDataURL = function(path){
-
-    };
-    // event triggered when readAsDataURL is finished reading
-    window.FileReader.prototype.onloadend = function(callback){
-        if (callback){
-            callback({
+        if (this.onloadend){
+            this.onloadend({
                 target : {
-                    result : true
+                    result : !filesystem.shim.failOnFileExistsCheck
                 }
             });
         }
     };
+
 
 })();

@@ -2,6 +2,6 @@
     "stamp" : 201210102245,
     "remoteRootStub" : "http://test.com/contentRoot/",
     "files" : [
-        { "remote" : "/resources/phonegap/android/content/css/images/icons-18-black.png", "stamp" : "1" }
+        { "remote" : "/1-file-test.html", "stamp" : "1" }
     ]
 }

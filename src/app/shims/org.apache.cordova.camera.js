@@ -68,15 +68,23 @@
 
             if (this.shim.enablePrompt){
                 if (confirm("Take picture?")){
-                    success(this.shim.imageUrl);
+                    if (success){
+                        success(this.shim.imageUrl);
+                    }
                 } else {
-                    error(this.shim.errorMessage);
+                    if (error){
+                        error(this.shim.errorMessage);
+                    }
                 }
             } else {
                 if (this.shim.getPictureSuccess){
-                    success(this.shim.imageUrl);
+                    if (success){
+                        success(this.shim.imageUrl);
+                    }
                 } else {
-                    error(this.shim.errorMessage);
+                    if (error){
+                        error(this.shim.errorMessage);
+                    }
                 }
 
             }

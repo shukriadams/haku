@@ -3,8 +3,7 @@
 /bower_components
 /deploy
 /src/.sass-cache
-/src/3rdparty
-!/src/3rdparty/cordova.js
+!/src/lib/cordova.js
 /compile_web
 /compile_android
 /binary_builds/Android.3.3.0.build/www/*
@@ -15,8 +14,8 @@ binary_builds/Eclipse debug project/Fortehwin/assets/*
 /deps.bat
 /sen
 /sen.bat
-/src/tests/qunit.js
-/src/tests/qunit.css
+/src/test/qunit.js
+/src/test/qunit.css
 /compile_ios.bat
 /gruntSettings.js
 /src/css/normalize.css
@@ -26,3 +25,4 @@ binary_builds/Eclipse debug project/Fortehwin/assets/*
 /src/start compass.bat
 /.sass-cache
 /_gruntSettings.js
+/src/lib

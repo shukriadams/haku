@@ -73,16 +73,17 @@ module.exports = function(grunt) {
                   { src: [ bowerRoot + '/Haku/gruntfile.js'], dest : __dirname + '/gruntfile.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/Haku/package.js'], dest : __dirname + '/package.js' , filter: 'isFile' },
                   { src: [ bowerRoot + '/Haku/bower.js'], dest : __dirname + '/bower.js', filter: 'isFile' },
-                  { src: [ bowerRoot + '/backbone/backbone.js'], dest : workDirectory + '/3rdparty/backbone.js', filter: 'isFile' },
-                  { src: [ bowerRoot + '/foundation/js/foundation.js'], dest : workDirectory + '/3rdparty/foundation.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/backbone/backbone.js'], dest : workDirectory + '/lib/backbone.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/foundation/js/foundation.js'], dest : workDirectory + '/lib/foundation.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/foundation/css/normalize.css'], dest : workDirectory + '/css/normalize.css', filter: 'isFile' },
-                  { src: [ bowerRoot + '/jquery/dist/jquery.js'], dest : workDirectory + '/3rdparty/jquery.js', filter: 'isFile' },
-                  { src: [ bowerRoot + '/klon/index.js'], dest : workDirectory + '/3rdparty/klon.js', filter: 'isFile' },
-                  { src: [ bowerRoot + '/modernizr/modernizr.js'], dest : workDirectory + '/3rdparty/modernizr.js', filter: 'isFile' },
-                  { src: [ bowerRoot + '/requirejs/require.js'], dest : workDirectory + '/3rdparty/require.js', filter: 'isFile' },
-                  { src: [ bowerRoot + '/underscore/underscore.js'], dest : workDirectory + '/3rdparty/underscore.js', filter: 'isFile' },
-                  { src: [ bowerRoot + '/ejs/index.js'], dest : workDirectory + '/3rdparty/ejs_production.js', filter: 'isFile' },
-                  { expand: true, cwd : bowerRoot + '/qunit/qunit', src: ['**'], dest: workDirectory + '/tests' }
+                  { src: [ bowerRoot + '/jquery/dist/jquery.js'], dest : workDirectory + '/lib/jquery.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/klon/index.js'], dest : workDirectory + '/lib/klon.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/yarn/index.js'], dest : workDirectory + '/lib/yarn.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/modernizr/modernizr.js'], dest : workDirectory + '/lib/modernizr.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/requirejs/require.js'], dest : workDirectory + '/lib/require.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/underscore/underscore.js'], dest : workDirectory + '/lib/underscore.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/ejs/index.js'], dest : workDirectory + '/lib/ejs_production.js', filter: 'isFile' },
+                  { expand: true, cwd : bowerRoot + '/qunit/qunit', src: ['**'], dest: workDirectory + '/test' }
               ]
           },
           android: {
@@ -109,7 +110,7 @@ module.exports = function(grunt) {
         android : [
           androidTargetFolder + "/shims/disposable",
           androidTargetFolder + "/css-sass",
-          androidTargetFolder + "/tests",
+          androidTargetFolder + "/test",
           androidTargetFolder + "/config.rb",
           androidTargetFolder + "/start compass.bat",
           androidTargetFolder + "/app/settings-*.js"
@@ -117,14 +118,14 @@ module.exports = function(grunt) {
         ios : [
           iosTargetFolder + "/shims/disposable",
           iosTargetFolder + "/css-sass",
-          iosTargetFolder + "/tests",
+          iosTargetFolder + "/test",
           iosTargetFolder + "/config.rb",
           iosTargetFolder + "/start compass.bat",
           iosTargetFolder + "/app/settings-*.js"        
         ],
         web : [
           webTargetFolder + "/css-sass",
-          webTargetFolder + "/tests",
+          webTargetFolder + "/test",
           webTargetFolder + "/config.rb",
           webTargetFolder + "/start compass.bat",
           webTargetFolder + "/app/settings-*.js"        
@@ -135,7 +136,7 @@ module.exports = function(grunt) {
       uglify: {
         android: {
           files: [
-            { cwd: androidTargetFolder + '/3rdparty', src: '**/*.js', dest:  androidTargetFolder + '/3rdparty', expand: true },
+            { cwd: androidTargetFolder + '/lib', src: '**/*.js', dest:  androidTargetFolder + '/lib', expand: true },
             { cwd: androidTargetFolder + '/app', src: '**/*.js', dest: androidTargetFolder + '/app', expand: true },
             { cwd: androidTargetFolder + '/views', src: '**/*.js', dest: androidTargetFolder + '/views', expand: true },
             { cwd: androidTargetFolder + '/ext', src: '**/*.js', dest: androidTargetFolder + '/ext', expand: true }
@@ -143,7 +144,7 @@ module.exports = function(grunt) {
         },
         ios: {
           files: [
-            { cwd: iosTargetFolder + '/3rdparty', src: '**/*.js', dest:  iosTargetFolder + '/3rdparty', expand: true },
+            { cwd: iosTargetFolder + '/lib', src: '**/*.js', dest:  iosTargetFolder + '/lib', expand: true },
             { cwd: iosTargetFolder + '/app', src: '**/*.js', dest: iosTargetFolder + '/app', expand: true },
             { cwd: iosTargetFolder + '/views', src: '**/*.js', dest: iosTargetFolder + '/views', expand: true },
             { cwd: iosTargetFolder + '/ext', src: '**/*.js', dest: iosTargetFolder + '/ext', expand: true }
@@ -151,7 +152,7 @@ module.exports = function(grunt) {
         },
         web: {
             files: [
-                { cwd: webTargetFolder + '/3rdparty', src: '**/*.js', dest:  webTargetFolder + '/3rdparty', expand: true },
+                { cwd: webTargetFolder + '/lib', src: '**/*.js', dest:  webTargetFolder + '/lib', expand: true },
                 { cwd: webTargetFolder + '/app', src: '**/*.js', dest: webTargetFolder + '/app', expand: true },
                 { cwd: webTargetFolder + '/views', src: '**/*.js', dest: webTargetFolder + '/views', expand: true },
                 { cwd: webTargetFolder + '/ext', src: '**/*.js', dest: webTargetFolder + '/ext', expand: true }

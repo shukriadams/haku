@@ -1,4 +1,4 @@
-define('loader', ['jquery','ejs', 'fileSystemShim'], function($){
+define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShim'], function($,_, yarn){
 
     "use strict";
 
@@ -24,56 +24,24 @@ define('loader', ['jquery','ejs', 'fileSystemShim'], function($){
         this._lastLogMessage;
         this._stamp;
         this._fileKey;
-        this._fileTransfer;
+        this._fileTransfer = null;
         this._progressCurrent = 0;
         this._manifest;
         this._filereader;
         this._existingFiles;
         this._fullManifestStamp;
-        this._parser = {
-            returnUptoLast : function (main, sub) {
-                // if substring doesn't exist in main string, returns zero length string
-                if (main.indexOf(sub) == -1)
-                    return "";
-
-                // if no text before substring, returns the main string
-                if (main.length == sub.length)
-                    return "";
-
-                // if reaches here, proceed to find desired substring
-                return main.substring(0, main.lastIndexOf(sub));
-            },
-            returnAfterLast : function (main, sub) {
-                // if substring doesn't exist in main string, returns zero length string
-                if (main.indexOf(sub) == -1)
-                    return "";
-
-                // if no text after substring, returns zero length string
-                if (main.length - 1 == main.lastIndexOf(sub))
-                    return "";
-
-                return main.substring(main.lastIndexOf(sub) + sub.length);
-            },
-            endsWith : function (main, sub) {
-                return main.indexOf(sub, main.length - sub.length) !== -1;
-            },
-            urlCombine : function (part1, part2) {
-                part1 = part1.replace(/\/+$/gm, '');
-                part2 = part2.replace(/^\/+/gm, '');
-                return part1 + "/" + part2;
-            }
-        };
         this._settings = {};
 
         // Default settings, must be production-ready. Settings can be overwritten by config file,
         // but assume this is on a dev or advanced user system.
 
-        this._settings.enable = true;
+        this._settings.enabled = false;
         this._settings.enableLogging = false;
         this._settings.verboseLogging = false;
         this._settings.forceFullFetch = false;
         this._settings.pauseBetweenFiles = 0;
         this._settings.maxLogItems = 10;
+        this._settings.onLoaded = null; // callback. Not the same as loader's own onloaded.
         this._settings.appName = "APP-NAME-NOT-SET",
         this._settings.appTitle = "APP TITLE NOT SET",
         this._settings.url = "MANIFEST URL NOT SET";  // url of remote manifest
@@ -83,10 +51,7 @@ define('loader', ['jquery','ejs', 'fileSystemShim'], function($){
         this._settings.CompiledRoot = "file:///android_asset/www/core/"; 			// Location of in-app resources. Used in "compiled" mode. Must end with "/".
 
 
-        if (!haku.settings.loaderSettings)
-            throw "Loader did not find expected settings at Haku.settings.loaderSettings";
-
-        this._settings = $.extend(this._settings, haku.settings.loaderSettings);
+        _.extend(this._settings, haku.settings.loader);
         this.loadFileSystem();
     };
 
@@ -213,7 +178,7 @@ define('loader', ['jquery','ejs', 'fileSystemShim'], function($){
         var self = this;
         this.log('Filesystem ready.');
 
-        if (!self._settings.enableUpdates) {
+        if (!self._settings.enabled) {
             self.log('Live content updating disabled.');
             self.exit();
             return;
@@ -264,13 +229,13 @@ define('loader', ['jquery','ejs', 'fileSystemShim'], function($){
             $.each(manifest.files, function (i, item) {
                 var localPathFragment = item.remote.replace(manifest.remoteRootStub, ''),
                     key = localPathFragment + '_key',
-                    localPath = this._parser.urlCombine(this._root, localPathFragment),
+                    localPath = yarn.urlCombine(self._root, localPathFragment),
                     localItemHash = window.localStorage.getItem(key);
 
                 // remove current from array of existing local files
-                for (var i = 0 ; i < this._existingFiles.length; i ++){
-                    if (this._existingFiles[i] === localPath){
-                        this._existingFiles.splice(i, 1);
+                for (var i = 0 ; i < self._existingFiles.length; i ++){
+                    if (self._existingFiles[i] === localPath){
+                        self._existingFiles.splice(i, 1);
                         break;
                     }
                 }
@@ -296,7 +261,7 @@ define('loader', ['jquery','ejs', 'fileSystemShim'], function($){
                     }
 
                     // if all files in manifest are checked proceed to download required content
-                    if (i >= _manifest.files.length - 1) {
+                    if (i >= self._manifest.files.length - 1) {
 
                         // must set total here, the download method recurses
                         self._totalItemsNeedingUpdating = self._itemsNeedingUpdates.length;
@@ -331,11 +296,11 @@ define('loader', ['jquery','ejs', 'fileSystemShim'], function($){
 
 
         // determine the directory the item will be placed in. This must be created if necessary
-        var itemDirectory = this._parser.urlCombine(this._root, item.localRelative);
-        itemDirectory = this._parser.returnUptoLast(itemDirectory, "/") + "/";
+        var itemDirectory = yarn.urlCombine(this._root, item.localRelative);
+        itemDirectory = yarn.returnUptoLast(itemDirectory, "/") + "/";
 
         this.createDirectory(itemDirectory, function () {
-            var file = self._parser.returnAfterLast(item.remotePath, "/");
+            var file = yarn.returnAfterLast(item.remotePath, "/");
 
             self.downloadFileTo(file, item.remotePath, item.localSavePath, function () {
                 window.localStorage.setItem(item.key, item.hash);
@@ -404,7 +369,8 @@ define('loader', ['jquery','ejs', 'fileSystemShim'], function($){
      * wraps up and loads first page
      */
     Loader.prototype.exit = function () {
-        this.onLoaded();
+        if (this.onLoaded)
+            this.onLoaded();
     }
 
 
@@ -458,7 +424,7 @@ define('loader', ['jquery','ejs', 'fileSystemShim'], function($){
      */
     Loader.prototype.createDirectory = function (path, callback) {
 
-        if (this._parser.endsWith(path, "/"))
+        if (yarn.endsWith(path, "/"))
             path = path.substring(0, path.length - 1);
 
         path = path.replace("file:///", ""); // todo : fix ; this is android specific!
@@ -549,11 +515,11 @@ define('loader', ['jquery','ejs', 'fileSystemShim'], function($){
 
 		        // reuse filetransfer, it seems recreating the a transfer object can "stress"
 		        // the device.
-		        if (this._fileTransfer == null) {
-                    this._fileTransfer = new FileTransfer();
+		        if (self._fileTransfer === null) {
+                    self._fileTransfer = new FileTransfer();
 		        }
 
-                this._fileTransfer.download(
+                self._fileTransfer.download(
     			    remotePath,
     			    localPath,
 				    function () {
