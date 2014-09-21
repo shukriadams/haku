@@ -27,21 +27,29 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
 
         this._filesChecked = 0;
         this._filesDownloaded = 0;
+
         // a list of files which have already been downloaded to app
         this._existingFiles = [];
+
         // files requiring updates
         this._updateQueue = [];
+
         // total number of files requiring updating. Use for progress indication
         this._updateQueueTotal = 0;
+
         // application root storage folder. Varies across platform, and also varies between app using precompiled or adhoc content.
         this._rootDirectory = null;
         this._lastLogMessage = null;
+
         // phonegap file system object
         this._fs = null;
+
         // phonegap filetransfer object
         this._fileTransfer = null;
+
         // phonegap filereader object
         this._filereader = null;
+
         // hash of entire remote manifest. Set when manifest is downloaded
         this._manifestHash = null;
 

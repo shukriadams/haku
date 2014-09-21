@@ -1,4 +1,4 @@
-require(['haku'], function(){
+require([], function(){
 
     'use strict';
 
