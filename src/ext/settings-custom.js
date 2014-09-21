@@ -1,14 +1,11 @@
+/**
+ * Lets you override Haku's core settings before your extensions have loaded.
+ */
 define('settings-custom', [ ], function(){
 
     "use strict";
 
-    /* DO NOT COMMIT THIS. OBVIOUSLY, YOU WILL */
     return {
-        /*
-        enableLoader : true,
-        loaderSettings : {
 
-        }
-         */
     };
 });

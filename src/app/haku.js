@@ -19,9 +19,8 @@ var haku = haku || {};
     // true sends all console.log() output to DOM. Useful for debugging on devices.
     haku.settings.sendConsoleToScreen=false;
 
-    // haku will invoke this callback (if set) instead of invoking ext/app-custom.
-    // This is primarily intended as a testing backdoor.
-    haku.settings.onLoaded = null;
+    // haku will invoke this callback when it is about to load extensions
+    haku.settings.onLoading = null;
 
     // Must be set to app's content folder on Android & iOS devices.
     haku.settings.systemPathRoot="/";
@@ -63,25 +62,25 @@ var haku = haku || {};
         require.config({
             baseUrl: haku.settings.systemPathRoot,
             paths: {
-                'backbone': 'lib/backbone',
-                'underscore': 'lib/underscore',
-                'ejs': 'lib/ejs_production',
-                'jquery': 'lib/jquery',
-                'klon': 'lib/klon',
-                'modernizr': 'lib/modernizr',
-                'foundation': 'lib/foundation',
-                'yarn': 'lib/yarn',
+                'backbone' : 'lib/backbone',
+                'underscore' : 'lib/underscore',
+                'ejs' : 'lib/ejs_production',
+                'jquery' : 'lib/jquery',
+                'klon' : 'lib/klon',
+                'modernizr' : 'lib/modernizr',
+                'foundation' : 'lib/foundation',
+                'yarn' : 'lib/yarn',
 
-                'haku.extend': haku.settings.extendPath, // your custom app's "main" initial loader must be placed in this file
-                'settings-custom' : 'ext/settings-custom',
-                'core': 'app/core',
-                'exception': 'app/models/exception',
-                'authentication': 'app/helpers/authentication',
-                'dataStore': 'app/helpers/dataStore',
-                'authToken' : 'app/models/authToken',
-                'view.ajax': 'app/views/ajax',
-                'view.basic': 'app/views/basic',
-                'settings': 'app/settings',
+                'haku.extend' : haku.settings.extendPath, // your custom app's "main" initial loader must be placed in this file
+                'haku.settings-custom' : 'ext/settings-custom',
+                'haku.core' : 'app/core',
+                'haku.exception' : 'app/models/exception',
+                'haku.authentication' : 'app/helpers/authentication',
+                'haku.dataStore' : 'app/helpers/dataStore',
+                'haku.authToken' : 'app/models/authToken',
+                'haku.view.ajax' : 'app/views/ajax',
+                'haku.view.basic' : 'app/views/basic',
+                'haku.settings' : 'app/settings',
                 'haku.loader' : 'app/loader',
                 'haku.fileSystemShim' : 'app/shims/org.apache.cordova.filesystem'
 
@@ -90,26 +89,31 @@ var haku = haku || {};
                 'underscore' : { exports: '_' },
                 'backbone' : { deps : ['underscore', 'jquery'] },
                 'foundation' : { deps : ['jquery'] },
-                'settings' : { deps : ['klon', 'underscore'] },
-                'authentication' : { deps : ['klon', 'backbone'] },
-                'dataStore' : { deps : ['underscore', 'klon'] },
-                'exception' : { deps : ['klon'] },
-                'authToken' : { deps : ['klon', 'underscore'] },
-                'core': { deps : [ 'backbone', 'ejs', 'klon', 'modernizr', 'foundation', 'exception', 'authentication', 'dataStore', 'authToken', 'settings'] },
-                'view.basic' : { deps : ['core'] },
-                'view.ajax' : { deps : ['view.basic'] },
-                'haku.extend' : { deps : ['view.ajax'] }
+                'haku.settings' : { deps : ['klon', 'underscore'] },
+                'haku.authentication' : { deps : ['klon', 'backbone'] },
+                'haku.dataStore' : { deps : ['underscore', 'klon'] },
+                'haku.exception' : { deps : ['klon'] },
+                'haku.authToken' : { deps : ['klon', 'underscore'] },
+                'haku.core': { deps : [ 'backbone', 'ejs', 'klon', 'modernizr', 'foundation', 'haku.exception', 'haku.authentication', 'haku.dataStore', 'haku.authToken', 'haku.settings'] },
+                'haku.view.basic' : { deps : ['haku.core'] },
+                'haku.view.ajax' : { deps : ['haku.view.basic'] },
+                'haku.extend' : { deps : ['haku.view.ajax'] }
             }
         });
 
         // load just enough libs to fetch settings
-        require(['underscore','settings-custom'], function(_, settings){
+        require(['underscore','haku.settings-custom'], function(_, settings){
 
             // pick up settings defined in ext/settings. This is one here before ext content is loaded
             // so we can use Loader if necessary.
             _.extend(haku.settings, settings);
 
             function loadExtended(){
+
+                if (haku.settings.onLoading){
+                    haku.settings.onLoading();
+                }
+
                 require(['haku.extend'], function(){
                     // extension will be loaded here
                 });
@@ -117,13 +121,15 @@ var haku = haku || {};
 
             if (haku.settings.loader.enabled){
                 require(['haku.loader'], function(Loader){
-                    new Loader({
-                        onLoaded : function(){
-                            if (haku.settings.loader.onLoaded)
-                                haku.settings.loader.onLoaded();
-                            loadExtended();
-                        }
-                    });
+
+                    var loaderOptions = haku.settings.loader;
+                    loaderOptions._onLoaded = function(){
+                        if (haku.settings.loader.onLoaded)
+                            haku.settings.loader.onLoaded();
+                        loadExtended();
+                    };
+
+                    new Loader(loaderOptions);
                 });
             } else {
                 loadExtended();
@@ -136,7 +142,7 @@ var haku = haku || {};
     if (haku.settings.launchMode === "direct"){
         // manually invoke event in browsers and on Android
         haku.start();
-    } else if (haku.settings.launchMode === "direct"){
+    } else if (haku.settings.launchMode === "onready"){
         // App load is placed in a document.addEventListener event handler because iOS requires this.
         // On non ios environments, this event is triggered manually.
         document.addEventListener('deviceready', function(){

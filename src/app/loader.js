@@ -5,53 +5,57 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
     var Loader = function(options){
 
         var defaults = {
-            onLoaded : null,    // callback when all items have been process
+            _onLoaded : null,    // callback when all items have been process. do not override this
             onStatusUpdate : null, // callback with status update message
-            onItemDownloaded : null   // callback when an item has been downloaded. Return obj
-        };
+            onItemDownloaded : null,   // callback when an item has been downloaded. Return obj
+            enabled : false,
+            enableLogging : false,
+            verboseLogging : false,
+            forceFullFetch : false,
+            pauseBetweenFiles : 0,
+            maxLogItems : 10,
+            onLoaded : null,// callback. Not the same as loader's own onloaded. and not invoked from this class. This is for reference only.
+            appName : "APP-NAME-NOT-SET",
+            appTitle : "APP TITLE NOT SET",
+            onDownload : null, // invoked each time a file is downloaded.
+            url : "MANIFEST URL NOT SET",  // url of remote manifest
+            assetsMode : "files"
+    };
 
-        defaults = $.extend(defaults, options);
-        $.extend(this, defaults)
+        _.extend(defaults,options);
+        _.extend(this,defaults);
 
         this._filesChecked = 0;
         this._filesDownloaded = 0;
-        this._root;
-        this._itemsNeedingUpdates = [];
-        this._totalItemsNeedingUpdating = 0;
-        this._itemsToDelete = [];
-        this._fs;
-        this._localStamp;
-        this._lastLogMessage;
-        this._stamp;
-        this._fileKey;
+        // a list of files which have already been downloaded to app
+        this._existingFiles = [];
+        // files requiring updates
+        this._updateQueue = [];
+        // total number of files requiring updating. Use for progress indication
+        this._updateQueueTotal = 0;
+        // application root storage folder. Varies across platform, and also varies between app using precompiled or adhoc content.
+        this._rootDirectory = null;
+        this._lastLogMessage = null;
+        // phonegap file system object
+        this._fs = null;
+        // phonegap filetransfer object
         this._fileTransfer = null;
-        this._progressCurrent = 0;
-        this._manifest;
-        this._filereader;
-        this._existingFiles;
-        this._fullManifestStamp;
-        this._settings = {};
+        // phonegap filereader object
+        this._filereader = null;
+        // hash of entire remote manifest. Set when manifest is downloaded
+        this._manifestHash = null;
 
-        // Default settings, must be production-ready. Settings can be overwritten by config file,
-        // but assume this is on a dev or advanced user system.
+        // todo : fix android-specific paths
+        if (this.assetsMode === "compiled"){
+            // Location of in-app resources. Used in "compiled" mode. Must end with "/".
+            this._rootDirectory = "file:///android_asset/www/core/";
+        }
+        else{
+            // Location on local storage where content is stored. Used "files" mode. Must end with "/".
+            this._rootDirectory = "file:///mnt/sdcard/" + this.appName + "/www/";
+        }
 
-        this._settings.enabled = false;
-        this._settings.enableLogging = false;
-        this._settings.verboseLogging = false;
-        this._settings.forceFullFetch = false;
-        this._settings.pauseBetweenFiles = 0;
-        this._settings.maxLogItems = 10;
-        this._settings.onLoaded = null; // callback. Not the same as loader's own onloaded.
-        this._settings.appName = "APP-NAME-NOT-SET",
-        this._settings.appTitle = "APP TITLE NOT SET",
-        this._settings.url = "MANIFEST URL NOT SET";  // url of remote manifest
-        this._settings.assetsMode = "files"; 										// compiled|files
-        this._settings.StorageRoot = "file:///mnt/sdcard/" + this._settings.appName + "/www/"; 			// Location on local storage where content is stored. Used "files" mode. Must end with "/".
-        this._settings.LoaderSettings = "file:///mnt/sdcard/" + this._settings.appName + "/loader-manifest.xml"; 	// location on local storage of loader settings file. Used "files" mode, and only as developer override.
-        this._settings.CompiledRoot = "file:///android_asset/www/core/"; 			// Location of in-app resources. Used in "compiled" mode. Must end with "/".
-
-
-        _.extend(this._settings, haku.settings.loader);
+        // start loader
         this.loadFileSystem();
     };
 
@@ -59,20 +63,15 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
     /**
     *
     */
-    Loader.prototype = function () { this.apply(this, arguments); }
+    Loader.prototype = function () { this.apply(this, arguments); };
 
 
     /**
-     *
+     * Loads a static filesystem object and stores it as a class member.
      */
     Loader.prototype.loadFileSystem = function() {
         var self = this;
         this.log('Attempting to load filesystem.');
-
-        if (this._settings.assetsMode === "compiled")
-            this._root = this._settings.CompiledRoot;
-        else
-            this._root = this._settings.StorageRoot;
 
         window.requestFileSystem(
         	LocalFileSystem.PERSISTENT,
@@ -84,12 +83,12 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
 
                 // find or create app root storage folder, and then start process to check/fill it
 	            self.directoryExists(
-                    self._root,
+                    self._rootDirectory,
                     function (exists) {
                         if (exists) {
                             self.findExistingFiles();
                         } else {
-                            self.createDirectory(self._root, function () {
+                            self.createDirectory(self._rootDirectory, function () {
                                 self.findExistingFiles();
                             });
                         }
@@ -100,19 +99,20 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
                 self.log('failed to load filesystem ' + err);
             }
         );
-    }
+    };
 
 
     /**
-     *
+     * Trigges building of app file list, then triggers updating of those files,
      */
     Loader.prototype.findExistingFiles = function () {
         var self = this;
-        self.listFiles(self._root, function (files) {
+        self.listFiles(self._rootDirectory, function (files) {
             self._existingFiles = files;
             self.determineUpdates();
         });
-    }
+    };
+
 
     /**
      *  Gets a list of all files in a given folder, regardless of nesting depth.
@@ -130,12 +130,11 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
         function processNext() {
             directoriesScanned++;
 
-            var dir = directoriesToScan[directoriesToScan.length - 1];
-            directoriesToScan.pop();
+            var dir = directoriesToScan[directoriesToScan.length - 1],
+                dirEntry = new DirectoryEntry("blank", dir),
+                directoryReader = dirEntry.createReader();
 
-            // Get a directory reader
-            var dirEntry = new DirectoryEntry("huh", dir);
-            var directoryReader = dirEntry.createReader();
+            directoriesToScan.pop();
 
             self.log("Attempting to read contents of folder " + dir);
 
@@ -172,29 +171,30 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
 
 
     /**
-     * works out what needs to be updated
+     * Works out which files need to be updated by downloading a remote manifest, then comparing the a hash for each remote file
+     * to a corresponding hash in localStorage for that file. Files to updated are stored in an update queue.
      */
-    Loader.prototype.determineUpdates = function (appFolderExists) {
+    Loader.prototype.determineUpdates = function () {
         var self = this;
         this.log('Filesystem ready.');
 
-        if (!self._settings.enabled) {
+        if (!self.enabled) {
             self.log('Live content updating disabled.');
             self.exit();
             return;
         }
 
-        self.log("Attempting to fetch manifest at " + self._settings.url);
+        self.log("Attempting to fetch manifest at " + self.url);
 
         $.ajax({
-            url: self._settings.url,
+            url: self.url,
             cache: false,
             dataType: 'json',
             error: function (request, status, exception) {
 
                 self.log("Error getting manifest list. " + request + "," + status + "," + exception + ".");
                 if (request.status === 0) {
-                    var msg = 'Can\'t contact server at ' + self._settings.url + '. Stopping.';
+                    var msg = 'Can\'t contact server at ' + self.url + '. Stopping.';
                     self.log(msg);
                 }
 
@@ -206,17 +206,14 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
         });
 
         function processManifest(manifest){
-            self._manifest = manifest;
-            self._fullManifestStamp = manifest.stamp;
-            var fullLocalManifestStamp = window.localStorage.getItem("localmanifeststamp");
+            self._manifestHash = manifest.hash;
 
-
-            // content is up to date if local manifest stamp is the same as remote stamp,
+            // content is up to date if local manifest hash is the same as remote hash,
             // the same number of files are present (we assume user can delete local files but we don't check specific files with hashes etc)
             // and we aren't forcing an update
-            if (self._fullManifestStamp === fullLocalManifestStamp
+            if (manifest.hash === localStorage.getItem("loader.manifestHash")
                 && self._existingFiles.length === manifest.files.length
-                && !self._settings.forceFullFetch)
+                && !self.forceFullFetch)
             {
                 self.log("All local content is already up to date - downloading bypassed.");
                 self.exit();
@@ -229,8 +226,8 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
             $.each(manifest.files, function (i, item) {
                 var localPathFragment = item.remote.replace(manifest.remoteRootStub, ''),
                     key = localPathFragment + '_key',
-                    localPath = yarn.urlCombine(self._root, localPathFragment),
-                    localItemHash = window.localStorage.getItem(key);
+                    localPath = yarn.urlCombine(self._rootDirectory, localPathFragment),
+                    localItemHash = localStorage.getItem(key);
 
                 // remove current from array of existing local files
                 for (var i = 0 ; i < self._existingFiles.length; i ++){
@@ -240,31 +237,31 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
                     }
                 }
 
-                self.log('localManifestStamp: ' + localItemHash + ' .remoteManifestStamp: ' + item.stamp);
+                self.log('localManifesthashp: ' + localItemHash + ' .remoteManifesthash: ' + item.hash);
 
                 self.ifFileExists(localPath, function (exists) {
 
-                    var upToDate = exists && localItemHash && localItemHash === item.stamp;
+                    var upToDate = exists && localItemHash && localItemHash === item.hash;
 
                     if (!upToDate) {
                         self.log("File " +  localPathFragment +" is not up to date ");
 
-                        self._itemsNeedingUpdates.push({
+                        self._updateQueue.push({
                             localRelative: localPathFragment,
-                            remotePath: self._settings.url,
+                            remotePath: self.url,
                             localSavePath: localPath,
                             key: key,
-                            hash: item.stamp
+                            hash: item.hash
                         });
                     } else {
                         self.log("File " + localPathFragment + " is up to date ");
                     }
 
                     // if all files in manifest are checked proceed to download required content
-                    if (i >= self._manifest.files.length - 1) {
+                    if (i >= manifest.files.length - 1) {
 
                         // must set total here, the download method recurses
-                        self._totalItemsNeedingUpdating = self._itemsNeedingUpdates.length;
+                        self._updateQueueTotal = self._updateQueue.length;
 
                         self.downloadNextRequiredUpdate();
                     }
@@ -272,7 +269,7 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
 
             }); // each loop
         }
-    }
+    };
 
 
     /**
@@ -280,41 +277,40 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
      */
     Loader.prototype.downloadNextRequiredUpdate = function () {
 
-
-        if (this._itemsNeedingUpdates.length == 0) {
-            window.localStorage.setItem("localmanifeststamp", this._fullManifestStamp);
+        if (this._updateQueue.length == 0) {
+            localStorage.setItem("loader.manifestHash", this._manifestHash);
             this.log("Finished updating. " + this._filesChecked + " files checked, " + this._filesDownloaded + " files downloaded. ");
             this.deleteOrphanFiles();
             return;
         }
 
         var self = this,
-            item = this._itemsNeedingUpdates[this._itemsNeedingUpdates.length - 1];
-        this._itemsNeedingUpdates.pop();
+            item = this._updateQueue[this._updateQueue.length - 1];
+        this._updateQueue.pop();
 
-        this.log("Fetching latest version of " + item.localRelative + " from " + item.remotePath)
+        this.log("Fetching latest version of " + item.localRelative + " from " + item.remotePath);
 
 
         // determine the directory the item will be placed in. This must be created if necessary
-        var itemDirectory = yarn.urlCombine(this._root, item.localRelative);
+        var itemDirectory = yarn.urlCombine(this._rootDirectory, item.localRelative);
         itemDirectory = yarn.returnUptoLast(itemDirectory, "/") + "/";
 
         this.createDirectory(itemDirectory, function () {
             var file = yarn.returnAfterLast(item.remotePath, "/");
 
             self.downloadFileTo(file, item.remotePath, item.localSavePath, function () {
-                window.localStorage.setItem(item.key, item.hash);
+                localStorage.setItem(item.key, item.hash);
                 self._filesDownloaded++;
 
-                if (self.onProgress){
-                    self.onProgress({ itemIndex : self._filesDownloaded });
+                if (self.onDownload){
+                    self.onDownload({ index : self._filesDownloaded, total : self._updateQueueTotal });
                 }
 
                 // call self to do next file.
                 self.downloadNextRequiredUpdate();
             });
         });
-    }
+    };
 
 
     /**
@@ -357,21 +353,21 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
                         fail);
 
 		        }
-            ) // getfile
+            ); // getfile
 
         }
 
         this.processNext();
-    }
+    };
 
 
     /**
      * wraps up and loads first page
      */
     Loader.prototype.exit = function () {
-        if (this.onLoaded)
-            this.onLoaded();
-    }
+        if (this._onLoaded)
+            this._onLoaded();
+    };
 
 
     /**
@@ -392,7 +388,7 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
 	            callback(false);
 	        }
         );
-    }
+    };
 
 
     /**
@@ -416,7 +412,7 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
         };
 
         this._filereader.readAsDataURL(path);
-    }
+    };
 
 
     /**
@@ -459,7 +455,7 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
         }
 
         work(0);
-    }
+    };
 
 
     /**
@@ -473,17 +469,17 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
 
         this._lastLogMessage = message;
 
-        if (this._settings.enableLogging) {
+        if (this.enableLogging) {
             console.log(message);
             var item = $('<li>' + message + '</li>');
             var host = $('#phLog');
             host.prepend(item);
 
-            if (host.children().length > this._settings.maxLogItems) {
+            if (host.children().length > this.maxLogItems) {
                 host.children().last().remove();
             }
         }
-    }
+    };
 
 
     /**
@@ -507,9 +503,6 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
     		{create: true, exclusive: false },
 		    function (fileEntry) {
 
-		        var sPath = fileEntry.fullPath.replace(filename, '');
-		        sPath = sPath + localPath; // this is where actual save path is made
-		        // path looks like "file:///mnt/sdcard/"
 		        // remove existing
 		        fileEntry.remove();
 
@@ -538,8 +531,8 @@ define('haku.loader', ['jquery','underscore', 'yarn', 'ejs', 'haku.fileSystemShi
     		        }
                 );
 		    }
-        ) // getfile
-    }
+        ); // getfile
+    };
 
 
     return Loader;
