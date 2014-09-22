@@ -2,7 +2,7 @@ Haku
 ----
 Haku is a boilerplate for rapidly creating Phonegap applications. It is an opinionated build script in that it consists
 of cherry-picked components, tied together in a way that is easy to reuse and extend. It is a framework in that its
-structure encourages code reuse.
+structure encourages code reuse. It also sets up shimming of Phonegaps's hardware interface so you can emulate phone hardware on your PC or Mac's browser. This means you can write and test most of your code in a browser without having to compile and run on a physical device or device emulator.
 
 Haku
 - is implemented with Backbone; it provides a scaffold on which you can create your app as Backbone views.
