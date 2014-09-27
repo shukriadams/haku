@@ -1,6 +1,6 @@
 {
   "name": "Haku",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "main": "path/to/main.css",
   "ignore": [
     ".jshintrc",
@@ -17,15 +17,15 @@
     "dependencies": {
         "klon": "https://raw.github.com/shukriadams/klon/master/klon.js",
         "yarn": "https://raw.github.com/shukriadams/yarn/master/src/yarn.js",
-        "backbone": "1.1.0",
-        "foundation": "5.3.3",
-        "jquery": "~2.1.1",
-        "modernizr": "2.8.3",
-        "requirejs": "~2.1.9",
-        "underscore": "~1.5.2",
-        "qunit" : "~1.12.0",
+        "backbone": "latest",
+        "foundation": "latest",
+        "jquery": "latest",
+        "modernizr": "latest",
+        "requirejs": "latest",
+        "underscore": "latest",
+        "qunit" : "latest",
         "ejs" : "https://embeddedjavascript.googlecode.com/files/ejs_production.js",
-        "phonegap" : "2.9.0"
+        "phonegap" : "latest"
     },  
   "license": "MIT",
   "description": "An opinionated boilerplate for Phonegap apps.",

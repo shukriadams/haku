@@ -20,7 +20,7 @@ Haku would like to be
 
 Status
 ------
-Haku is still in early alpha. It builds and works, but its structure hasn't settled yet. Use with care.
+Haku is still in alpha. It builds and works, but its structure hasn't settled yet. Use with care.
 
 
 Coming soon
@@ -53,9 +53,9 @@ Haku set up
 Haku update
 -----------
 You can keep your Haku files up-to-date - from your "MyHaku" folder
-- Run "bower install https://github.com/shukriadams/haku.git#master" 
+- Run "bower update"
 - Run "grunt init"
-Nothing in your /ext and /css-sass folders will be touched, but it's suggested that you stash your work anyway.
+Nothing in your /ext and /css-sass folders will be touched, but it's suggested that you backup your work anyway.
 
 
 Extending
