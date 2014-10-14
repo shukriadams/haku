@@ -74,12 +74,6 @@ var haku = haku || {};
                 'haku.extend' : haku.settings.extendPath, // your custom app's "main" initial loader must be placed in this file
                 'haku.settings-custom' : 'ext/settings-custom',
                 'haku.core' : 'app/core',
-                'haku.exception' : 'app/models/exception',
-                'haku.authentication' : 'app/helpers/authentication',
-                'haku.dataStore' : 'app/helpers/dataStore',
-                'haku.authToken' : 'app/models/authToken',
-                'haku.view.ajax' : 'app/views/ajax',
-                'haku.view.basic' : 'app/views/basic',
                 'haku.settings' : 'app/settings',
                 'haku.loader' : 'app/loader',
                 'haku.fileSystemShim' : 'app/shims/org.apache.cordova.filesystem'
@@ -90,14 +84,8 @@ var haku = haku || {};
                 'backbone' : { deps : ['underscore', 'jquery'] },
                 'foundation' : { deps : ['jquery'] },
                 'haku.settings' : { deps : ['klon', 'underscore'] },
-                'haku.authentication' : { deps : ['klon', 'backbone'] },
-                'haku.dataStore' : { deps : ['underscore', 'klon'] },
-                'haku.exception' : { deps : ['klon'] },
-                'haku.authToken' : { deps : ['klon', 'underscore'] },
-                'haku.core': { deps : [ 'backbone', 'ejs', 'klon', 'modernizr', 'foundation', 'haku.exception', 'haku.authentication', 'haku.dataStore', 'haku.authToken', 'haku.settings'] },
-                'haku.view.basic' : { deps : ['haku.core'] },
-                'haku.view.ajax' : { deps : ['haku.view.basic'] },
-                'haku.extend' : { deps : ['haku.view.ajax'] }
+                'haku.core': { deps : [ 'backbone', 'ejs', 'klon', 'modernizr', 'foundation', 'haku.settings'] },
+                'haku.extend' : { deps : [ 'haku.core' ] }
             }
         });
 

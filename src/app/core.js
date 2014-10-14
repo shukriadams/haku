@@ -84,8 +84,6 @@
 
             // start router
             haku.router = haku.routers.instance();
-            haku.authentication = haku.helpers.authentication.instance();
-            haku.storage = haku.helpers.dataStores.instance();
 
             // start foundation. Do this after router initializes with default views
             $(document).foundation();
