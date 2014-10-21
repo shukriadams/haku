@@ -1,32 +1,16 @@
 Haku
-----
-Haku is a boilerplate for rapidly creating Phonegap applications. It is an opinionated build script in that it consists
-of cherry-picked components, tied together in a way that is easy to reuse and extend. It is a framework in that its
-structure encourages code reuse. It also sets up shimming of Phonegaps's hardware interface so you can emulate phone hardware on your PC or Mac's browser. This means you can write and test most of your code in a browser without having to compile and run on a physical device or device emulator.
+====
+Haku is a boilerplate for rapidly creating apps that run interchangeably in desktop browsers and within the Phonegap environement. Setting up an app for either is fairly trivial, but getting the same code base to run in both requires a series of compromises and fixes. Haku accumulates and abstracts those fixes, letting you focus on your own code.
 
-Haku
-- is implemented with Backbone; it provides a scaffold on which you can create your app as Backbone views.
-- assumes you're going to use Require to spread your apps over different files.
-- ships with Foundation in Sass mode, so you can change the look and feel of your app quickly.
-- provides a series of common utility classes for managing offline data, authentication, page transitions etc. 
-- uses Grunt and Bower for build tasks and dependencies. It takes care of the usual HTML minification etc, 
-- compiles to HTML which can in turn seamlessly compile to Phonegap with the Cordova CLI or Adobe Build. 
-
-Haku would like to be 
-- object oriented, at least as much as Javascript permits
-- small and generic
-- command line friendly so it plays nice with your existing CI flow
+- Haku is built entirely on Backbone ; if you're used to Backbone you're well on your way already.
+- Haku encourages modular design by using RequireJS and providing its own loader for CSS files. 
+- Haku shims most of the standard Phonegap hardware plugins, allowing you to simulate in your desktop browser the standard phone-only components like the camera, gyroscope and others. This means you can write and test phone-specific code on your desktop without having to be tethered to a device.
+- ships with build scripts for Phonegap so you can compile immediately. 
 
 
 Status
 ------
 Haku is still in alpha. It builds and works, but its structure hasn't settled yet. Use with care.
-
-
-Coming soon
------------
-- automated Adobe Build integration
-- better build support on non-Windows systems.
 
 
 System set up
