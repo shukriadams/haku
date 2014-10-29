@@ -167,7 +167,8 @@ module.exports = function(grunt) {
             sassDir: precompileDirectory + '/css-sass',
             cssDir : precompileDirectory + '/css',
             // workaround for compass bug that was not getting "importPath" direct setter
-            raw: 'add_import_path "' + precompileDirectory + '/../bower_components/foundation/scss'+ '"'
+            raw: 'add_import_path "' + precompileDirectory + '/../bower_components/foundation/scss'+ '",' +
+                  '"' + precompileDirectory + '/../bower_components/foundation/scss/foundation'+ '"'            
           }
         }
       },
