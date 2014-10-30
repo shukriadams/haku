@@ -45,6 +45,17 @@ module.exports = function(grunt) {
   // where haku compiles and optimises final content for web apps. This content can run as public web apps.
   var webTargetFolder = settings.webTargetFolder ? settings.webTargetFolder : "compile_web";
 
+  // targetFolder is the target folder regardless of task
+  var targetFolder = "";
+  if (currentTask === "web")
+    targetFolder = webTargetFolder;
+  else if (currentTask === "android")
+    targetFolder = androidTargetFolder;
+  else if (currentTask === "ios")
+    targetFolder = iosTargetFolder;
+
+
+
   // use to assign an external grunt task prior to compiling for platform. Task must be in [workDirectory]/Gruntfile.js. Leave blank to skip.
   var precompileGrunt = null,
       fs = require('fs'),
@@ -121,75 +132,51 @@ module.exports = function(grunt) {
           },
           android: {
               files: [
-                  { expand: true, cwd : precompileDirectory, src: ['**'], dest: androidTargetFolder + '/' },
-                  { src: [ precompileDirectory + '/app/settings-android.js'], dest : androidTargetFolder + '/app/settings.js', filter: 'isFile' }
+                  { expand: true, cwd : precompileDirectory, src: ['**'], dest: targetFolder + '/' },
+                  { src: [ precompileDirectory + '/app/settings-android.js'], dest : targetFolder + '/app/settings.js', filter: 'isFile' }
               ]
           },
           ios: {
               files: [
-                  { expand: true, cwd : precompileDirectory, src: ['**'], dest: iosTargetFolder + '/' },
-                  { src: [ precompileDirectory + '/app/settings-ios.js'], dest : iosTargetFolder + '/app/settings.js', filter: 'isFile' }
+                  { expand: true, cwd : precompileDirectory, src: ['**'], dest: targetFolder + '/' },
+                  { src: [ precompileDirectory + '/app/settings-ios.js'], dest : targetFolder + '/app/settings.js', filter: 'isFile' }
               ]
           },
           web: {
               files: [
-                  {expand: true, cwd : precompileDirectory, src: ['**'], dest: webTargetFolder + '/'}
+                  {expand: true, cwd : precompileDirectory, src: ['**'], dest: targetFolder + '/'}
               ]
           }                             
       },
 
 
       clean:{
-        android : [
-          androidTargetFolder + "/shims/disposable",
-          androidTargetFolder + "/css-sass",
-          androidTargetFolder + "/test",
-          androidTargetFolder + "/config.rb",
-          androidTargetFolder + "/start compass.bat",
-          androidTargetFolder + "/app/settings-*.js"
-        ],
-        ios : [
-          iosTargetFolder + "/shims/disposable",
-          iosTargetFolder + "/css-sass",
-          iosTargetFolder + "/test",
-          iosTargetFolder + "/config.rb",
-          iosTargetFolder + "/start compass.bat",
-          iosTargetFolder + "/app/settings-*.js"        
+        mobile : [
+          targetFolder + "/shims/disposable",
+          targetFolder + "/css-sass",
+          targetFolder + "/test",
+          targetFolder + "/config.rb",
+          targetFolder + "/start compass.bat",
+          targetFolder + "/app/settings-*.js"
         ],
         web : [
-          webTargetFolder + "/css-sass",
-          webTargetFolder + "/test",
-          webTargetFolder + "/config.rb",
-          webTargetFolder + "/start compass.bat",
-          webTargetFolder + "/app/settings-*.js"        
+          targetFolder + "/css-sass",
+          targetFolder + "/test",
+          targetFolder + "/config.rb",
+          targetFolder + "/start compass.bat",
+          targetFolder + "/app/settings-*.js"        
         ]
       },
 
 
       uglify: {
-        android: {
+        default : {
           files: [
-            { cwd: androidTargetFolder + '/lib', src: '**/*.js', dest:  androidTargetFolder + '/lib', expand: true },
-            { cwd: androidTargetFolder + '/app', src: '**/*.js', dest: androidTargetFolder + '/app', expand: true },
-            { cwd: androidTargetFolder + '/views', src: '**/*.js', dest: androidTargetFolder + '/views', expand: true },
-            { cwd: androidTargetFolder + '/ext', src: '**/*.js', dest: androidTargetFolder + '/ext', expand: true }
+            { cwd: targetFolder + '/lib', src: '**/*.js', dest:  targetFolder + '/lib', expand: true },
+            { cwd: targetFolder + '/app', src: '**/*.js', dest: targetFolder + '/app', expand: true },
+            { cwd: targetFolder + '/views', src: '**/*.js', dest: targetFolder + '/views', expand: true },
+            { cwd: targetFolder + '/ext', src: '**/*.js', dest: targetFolder + '/ext', expand: true }
           ]
-        },
-        ios: {
-          files: [
-            { cwd: iosTargetFolder + '/lib', src: '**/*.js', dest:  iosTargetFolder + '/lib', expand: true },
-            { cwd: iosTargetFolder + '/app', src: '**/*.js', dest: iosTargetFolder + '/app', expand: true },
-            { cwd: iosTargetFolder + '/views', src: '**/*.js', dest: iosTargetFolder + '/views', expand: true },
-            { cwd: iosTargetFolder + '/ext', src: '**/*.js', dest: iosTargetFolder + '/ext', expand: true }
-          ]
-        },
-        web: {
-            files: [
-                { cwd: webTargetFolder + '/lib', src: '**/*.js', dest:  webTargetFolder + '/lib', expand: true },
-                { cwd: webTargetFolder + '/app', src: '**/*.js', dest: webTargetFolder + '/app', expand: true },
-                { cwd: webTargetFolder + '/views', src: '**/*.js', dest: webTargetFolder + '/views', expand: true },
-                { cwd: webTargetFolder + '/ext', src: '**/*.js', dest: webTargetFolder + '/ext', expand: true }
-            ]
         }                
       },
 
@@ -209,53 +196,54 @@ module.exports = function(grunt) {
 
 
       cssmin: {
-        android: {
+        default: {
           expand: true,
           cwd: precompileDirectory + '/css',
           src: ['*.css', '!*.min.css'],
-          dest: androidTargetFolder + '/css/',
+          dest: targetFolder + '/css/',
           ext: '.css'
-        },
-        ios: {
-          expand: true,
-          cwd: precompileDirectory + '/css',
-          src: ['*.css', '!*.min.css'],
-          dest: iosTargetFolder + '/css/',
-          ext: '.css'
-        },
-        web: {
-            expand: true,
-            cwd: precompileDirectory + '/css',
-            src: ['*.css', '!*.min.css'],
-            dest: webTargetFolder + '/css/',
-            ext: '.css'
-        }                
+        }
       },
 
 
       replace: {
-        android_requireRoot: {
-            src: [ androidTargetFolder + '/app/haku.js'],
-            dest: androidTargetFolder + '/app/',
+
+        // set base to empty string, this is for devices only, and is required for both 
+        // backbone and requirejs's url mapping on both devices and on web browsers
+        reset_base: {
+            src: [ targetFolder + '/index.html'],
+            dest: targetFolder + '/index.html',
             replacements: [{
-                from: /haku.settings.systemPathRoot="\/"/g,
-                to: 'haku.settings.systemPathRoot="file:///android_asset/www/"'
+                from: /<base href="\/" \/>/g,
+                to: '<base href="" \/>'
             }]
         },
 
-        android_removeShims: {
-            // clear all shim files of content, but leave empty files 
-            src: [ androidTargetFolder + '/app/shims/*.js'],
-            dest: androidTargetFolder + '/app/shims/',
+        // clear all shim files of content, but leave empty files. This is done for
+        // device builds only
+        removeShims: {
+            src: [ targetFolder + '/app/shims/*.js'],
+            dest: targetFolder + '/app/shims/',
             replacements: [{
                 from: /.*/g,                   
                 to: ''
             }]
         },
 
+        // set requirejs root in settings file for android file system
+        android_requireRoot: {
+            src: [ targetFolder + '/app/haku.js'],
+            dest: targetFolder + '/app/',
+            replacements: [{
+                from: /haku.settings.systemPathRoot="\/"/g,
+                to: 'haku.settings.systemPathRoot="file:///android_asset/www/"'
+            }]
+        },
+
+        // set requirejs root in settings file for ios file system
         ios_requireRoot: {
-            src: [ iosTargetFolder + '/app/haku.js'],
-            dest: iosTargetFolder + '/app/',
+            src: [ targetFolder + '/app/haku.js'],
+            dest: targetFolder + '/app/',
             replacements: [
                 {
                     from: /haku.settings.systemPathRoot='\/'/g,
@@ -266,17 +254,7 @@ module.exports = function(grunt) {
                     to: 'haku.settings.launchMode="onready"'
                 }
             ]
-        },
-
-        ios_removeShims: {
-            // clear all shim files of content, but leave empty files 
-            src: [ iosTargetFolder + '/app/shims/*.js'],
-            dest: iosTargetFolder + '/app/shims/',
-            replacements: [{
-                from: /.*/g,                   
-                to: ''
-            }]
-        }        
+        }
 
       },
 
@@ -303,23 +281,23 @@ module.exports = function(grunt) {
 
 
   // set up tasks
-  var androidTasks = ['copy:android', 'uglify:android', 'compass', 'cssmin:android', 'clean:android', 'replace:android_requireRoot', 'replace:android_removeShims'];
+  var androidTasks = ['copy:android', 'uglify:default', 'compass', 'cssmin:default', 'clean:mobile', 'replace:android_requireRoot', 'replace:removeShims', 'replace:reset_base:'];
   if (precompileGruntTask) androidTasks.unshift('hub:precompileRun');
 
-  var iosTasks = ['copy:ios', 'uglify:ios', 'compass', 'cssmin:ios', 'clean:ios', 'replace:ios_requireRoot', 'replace:ios_removeShims'];
+  var iosTasks = ['copy:ios', 'uglify:default', 'compass', 'cssmin:default', 'clean:mobile', 'replace:ios_requireRoot', 'replace:removeShims', 'replace:reset_base:'];
   if (precompileGruntTask) iosTasks.unshift('hub:precompileRun');
 
-  var webTasks = ['copy:web', 'uglify:web', 'compass', 'cssmin:web', 'clean:web'];
+  var webTasks = ['copy:web', 'uglify:default', 'compass', 'cssmin:default', 'clean:web'];
   if (precompileGruntTask) webTasks.unshift('hub:precompileRun');
 
   // set up debug tasks
   var androidDebug = androidTasks.slice(); // copy array
-  removeItem(androidDebug, "uglify:android");
-  removeItem(androidDebug, "cssmin:android");
+  removeItem(androidDebug, "uglify:default");
+  removeItem(androidDebug, "cssmin:default");
 
   var iosDebug = iosTasks.slice();
-  removeItem(iosDebug, "uglify:ios");
-  removeItem(iosDebug, "clean:ios");
+  removeItem(iosDebug, "uglify:default");
+  removeItem(iosDebug, "cssmin:default");
   
   function removeItem(arr, item){
     var index = arr.indexOf(item);
@@ -329,10 +307,10 @@ module.exports = function(grunt) {
 
   grunt.registerTask('init', ['bower', 'copy:init']);
   grunt.registerTask('dev', ['bower', 'copy:initDev']);
-  grunt.registerTask('android-debug', androidDebug);
   grunt.registerTask('android', androidTasks);
+  grunt.registerTask('android-debug', androidDebug);
   grunt.registerTask('ios', iosTasks);
-  grunt.registerTask('ios-debug', removeItem);
+  grunt.registerTask('ios-debug', iosDebug);
   grunt.registerTask('web', webTasks);
 
 };
