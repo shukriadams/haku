@@ -1,3 +1,22 @@
+/**
+ *  Haku : a mobile and web build framework based on Phonegap and Backbone.
+ *  @author  Shukri Adams (shukri.adams@gmail.com)
+ *
+ *  WARNING : This file is managed by Haku's own build scripts, and may be overwritten as part of the normal build process.
+ *  Do not change its contents unless you know what you're doing.
+ *
+ *  Tasks available :
+ *  init : this is the normal starting point for setting Haku up in your project. It gets the latest version of Haku's
+ *         dependencies (using Bower), creates the Haku app directory structure, and copies all Haku's own files to those
+ *         directories.
+ *  web : Builds Haku as a pure web app.
+ *  android : Builds Haku for Android.
+ *  android-debug : Builds Haku for Android, but in debug-friendly mode (no minify, uglify etc).
+ *  ios : Builds Haku for iOS.
+ *  ios-debug : Builds Haku for iOS, but in debug-friendly mode (no minify, uglify etc).
+ *  dev : Sets Haku up in dev mode. Use this if you have cloned the Haku repo and want to develop on it's core.
+ */
+
 module.exports = function(grunt) {
 
   'use strict';
@@ -81,6 +100,20 @@ module.exports = function(grunt) {
                   { src: [ bowerRoot + '/yarn/index.js'], dest : workDirectory + '/lib/yarn.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/modernizr/modernizr.js'], dest : workDirectory + '/lib/modernizr.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/requirejs/require.js'], dest : workDirectory + '/lib/require.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/underscore/underscore.js'], dest : workDirectory + '/lib/underscore.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/ejs/index.js'], dest : workDirectory + '/lib/ejs_production.js', filter: 'isFile' },
+                  { expand: true, cwd : bowerRoot + '/qunit/qunit', src: ['**'], dest: workDirectory + '/test' }
+              ]
+          },
+          initDev :{
+              files: [
+                  { src: [ bowerRoot + '/backbone/backbone.js'], dest : workDirectory + '/lib/backbone.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/klon/index.js'], dest : workDirectory + '/lib/klon.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/requirejs/require.js'], dest : workDirectory + '/lib/require.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/jquery/dist/jquery.js'], dest : workDirectory + '/lib/jquery.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/foundation/js/foundation.js'], dest : workDirectory + '/lib/foundation.js', filter: 'isFile' },
+                  { src: [ bowerRoot + '/foundation/css/normalize.css'], dest : workDirectory + '/css/normalize.css', filter: 'isFile' },
+                  { src: [ bowerRoot + '/modernizr/modernizr.js'], dest : workDirectory + '/lib/modernizr.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/underscore/underscore.js'], dest : workDirectory + '/lib/underscore.js', filter: 'isFile' },
                   { src: [ bowerRoot + '/ejs/index.js'], dest : workDirectory + '/lib/ejs_production.js', filter: 'isFile' },
                   { expand: true, cwd : bowerRoot + '/qunit/qunit', src: ['**'], dest: workDirectory + '/test' }
@@ -252,7 +285,7 @@ module.exports = function(grunt) {
           src: [precompileGrunt],
           tasks: [precompileGruntTask]
         }
-      },      
+      }
 
   });
 
@@ -295,6 +328,7 @@ module.exports = function(grunt) {
   }
 
   grunt.registerTask('init', ['bower', 'copy:init']);
+  grunt.registerTask('dev', ['bower', 'copy:initDev']);
   grunt.registerTask('android-debug', androidDebug);
   grunt.registerTask('android', androidTasks);
   grunt.registerTask('ios', iosTasks);

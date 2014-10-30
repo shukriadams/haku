@@ -31,7 +31,7 @@ Haku set up
  - From  /bower_components/haku copy package.json, grunfile.js & bower.json to your "MyHaku" folder. 
  - Run "npm install" to install all required node packages.
  - Run "grunt init" to set everything else up
- - Serve haku from "MyHaku/src" with your favorite web server.
+ - Serve Haku from "MyHaku/src" with your favorite web server.
  
 
 Haku update
@@ -122,3 +122,13 @@ Then inside of "mySubfolder", create your own script grunt script(s).
 Run "grunt init" from inside "MyHaku". Haku will unpack itself inside of "mySubfolder/src", which will become your new work root.
 
 Now let's build Haku for the web - from "MyHaku", run "Grunt web". Haku will call "mySubfolder/myGruntfile.js myTask" (mytask is optional). Make sure your own grunt script dumps its final output in "mySubfolder/precompile". Haku will pick up everything here and continue its web build.
+
+
+Developing
+----------
+Should you want to develop on the core of Haku,
+- Clone the project repo from github
+- Run "npm install"
+- Run "bower install"
+- Run "grunt dev"
+- Serve Haku from "/src" with your favorite web server

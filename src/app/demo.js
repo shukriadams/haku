@@ -1,5 +1,12 @@
-// Use require to load haku scripts, and then start app.
+/**
+ *  Haku : a mobile and web build framework based on Phonegap and Backbone.
+ *  @author  Shukri Adams (shukri.adams@gmail.com)
+ *
+ *  WARNING : This file is managed by Haku's own build scripts, and may be overwritten as part of the normal build process.
+ *  Do not change its contents unless you know what you're doing.
+ */
 
+// Use require to load haku scripts, and then start app.
 require(['haku'], function(){
 
     'use strict';

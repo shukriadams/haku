@@ -1,18 +1,20 @@
-/*
+/**
+ *  Haku : a mobile and web build framework based on Phonegap and Backbone.
+ *  @url https://github.com/shukriadams/haku
+ *  @author  Shukri Adams (shukri.adams@gmail.com)
+ *
+ *  WARNING : This file is managed by Haku's own build scripts, and may be overwritten as part of the normal build process.
+ *  Do not change its contents unless you know what you're doing.
+ */
 
+/*
  Namespaces reference
 
  haku.app;             Running instance of app. Global dependency, must be initialized. Starting app sets it.
  haku.router;          Router instance
  haku.settings;        Global settings holder
- haku.storage;         Key-value storage system.
- haku.authentication;  Authentication handler for application (holds tokens, current user id etc)
 
- haku.application. : app core
- haku.models.authTokens. :
- haku.remote. :                Types which represent calls on remote servers, normally external APIs or suchlike.
- haku.remote.tokenProviders. : Gets authentication tokens. IE, remote logging in happens here.
- haku.routers. :
+ haku.application. :   App class (type).
 
 */
 
@@ -80,6 +82,49 @@
         initialize : function(){
             haku.app = this;
         },
+
+        /**
+         * Loads a CSS file dynamically; use this as workaround to lack of RequireJS css loader
+         * @param {string} href - Path to css file
+         * @param {string} [id] - Optional unique key for resource. Assign a key to an href if you want to replace it a later stage with something else.
+         * */
+        requireCss : function (href, key){
+
+            // partial IE 7 fallback. Reimplement unique checks.
+            if (document.createStyleSheet)
+            {
+                document.createStyleSheet(href);
+                return;
+            }
+
+            var head = document.getElementsByTagName("head")[0];
+            var fileRef;
+
+            if (key)
+                fileRef = head.querySelectorAll('link[id="' + key + '"]');
+            else
+                fileRef = head.querySelectorAll('link[href="' + href + '"]');
+
+            if (fileRef && fileRef.length === 0) {
+                fileRef = document.createElement("link");
+            } else {
+                fileRef = fileRef[0];
+            }
+
+            // note : append element BEFORE setting attributes, due to an IE quirk
+            head.appendChild(fileRef);
+
+            fileRef.setAttribute("type", "text/css");
+            fileRef.setAttribute("rel", "stylesheet");
+            if (key){
+                fileRef.setAttribute("id", key);
+            }
+
+            // note : href must be added LAST because of an IE quirk
+            fileRef.setAttribute("href", href);
+
+        },
+
         start : function(){
 
             // start router
