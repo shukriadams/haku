@@ -10,7 +10,8 @@ Haku is a boilerplate for rapidly creating apps that run interchangeably in desk
 
 Browser support
 ---------------
-Haku requires an HTML5-compatible browser.
+Haku requires an HTML5-compatible browser. 
+
 
 Status
 ------
@@ -107,7 +108,9 @@ The files generated will behave the same as the ones you've viewed in /src, but 
 
 Compiling Phonegap binaries
 ---------------------------
-Please see phonegap.com for detailed build instructions. An example MSDOS build script for Android is included - run "build_phonegap_android_headless.bat MyHaku" to create an app called "MyHaku". This script is not intended for production use, but it should give you a good idea of how to set up the compilation process.
+Please see phonegap.com for detailed instructions on setting up your machine environment for compiling. 
+
+For Android run the MSDOS script with "build_android_headless.bat MyHaku" or, on OSX run bash script with "./build_ios_healdess MyHaku" to create an app called "MyHaku". These scripts are not intended for production use, but it should give you a good idea of how to set up your own build process.
 
 
 Go deeper
