@@ -8,6 +8,10 @@ Haku is a boilerplate for rapidly creating apps that run interchangeably in desk
 - ships with build scripts for Phonegap so you can compile immediately. 
 
 
+Browser support
+---------------
+Haku requires an HTML5-compatible browser.
+
 Status
 ------
 Haku is still in alpha. It builds and works, but its structure hasn't settled yet. Use with care.
@@ -36,9 +40,7 @@ Haku set up
 
 Haku update
 -----------
-You can keep your Haku files up-to-date - from your "MyHaku" folder
-- Run "bower update"
-- Run "grunt init"
+- From your MyHaku folde, run "grunt init". Because the gruntfile has to overwrite itself and the latest version of it may change what it does, it's recommended you run it twice, just to be sure.
 Nothing in your /ext and /css-sass folders will be touched, but it's suggested that you backup your work anyway.
 
 
