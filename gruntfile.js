@@ -49,9 +49,9 @@ module.exports = function(grunt) {
   var targetFolder = "";
   if (currentTask === "web")
     targetFolder = webTargetFolder;
-  else if (currentTask === "android")
+  else if (currentTask === "android" || currentTask === "android-debug")
     targetFolder = androidTargetFolder;
-  else if (currentTask === "ios")
+  else if (currentTask === "ios"  || currentTask === "ios-debug")
     targetFolder = iosTargetFolder;
 
 
@@ -151,6 +151,7 @@ module.exports = function(grunt) {
 
 
       clean:{
+        options : { force: true },
         mobile : [
           targetFolder + "/shims/disposable",
           targetFolder + "/css-sass",
