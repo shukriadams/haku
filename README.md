@@ -1,10 +1,10 @@
 Haku
 ====
-Haku is a boilerplate for rapidly creating apps that run interchangeably in desktop browsers and within the Phonegap environement. Setting up an app for either is fairly trivial, but getting the same code base to run in both requires a series of compromises and fixes. Haku accumulates and abstracts those fixes, letting you focus on your own code.
+Haku is a boilerplate for rapidly creating apps that run interchangeably in desktop browsers and within the Phonegap environement. Normally, setting up an app for either environment is fairly trivial, but getting the same code base to run in both requires a series of compromises and fixes. Haku accumulates and abstracts those fixes, letting you focus on your own code.
 
 - Haku is built entirely on Backbone ; if you're used to Backbone you're well on your way already.
-- Haku encourages modular design by using RequireJS and providing its own loader for CSS files. 
-- Haku shims most of the standard Phonegap hardware plugins, allowing you to simulate in your desktop browser the standard phone-only components like the camera, gyroscope and others. This means you can write and test phone-specific code on your desktop without having to be tethered to a device.
+- Haku encourages modular design and on-demand loading by using RequireJS throughtout, and providing its own loader for CSS files. 
+- Haku shims most of the standard Phonegap hardware plugins, allowing you to simulate in your desktop browser the standard phone-only components like the camera, gyroscope and others. This means you can write and test phone-specific code directly on your desktop browser without using a device simulator or being tethered to a physical device.
 - ships with build scripts for Phonegap so you can compile immediately. 
 
 
