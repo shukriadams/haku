@@ -41,7 +41,9 @@ Haku set up
 
 Haku update
 -----------
-- From your MyHaku folde, run "grunt init". Because the gruntfile has to overwrite itself and the latest version of it may change what it does, it's recommended you run it twice, just to be sure.
+From your MyHaku folder
+- Run "bower update"
+- Run "grunt init". Because the gruntfile has to overwrite itself and the latest version of it may change what it does, it's recommended you run it twice, just to be sure.
 Nothing in your /ext and /css-sass folders will be touched, but it's suggested that you backup your work anyway.
 
 

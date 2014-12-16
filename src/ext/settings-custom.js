@@ -5,7 +5,7 @@
  *  You can override Haku's core settings with this file. Haku will not overwrite this file.
  */
 
-define('settings-custom', [ ], function(){
+define('haku.settings-custom', [ ], function(){
 
     "use strict";
 
