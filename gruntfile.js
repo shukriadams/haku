@@ -247,7 +247,7 @@ module.exports = function(grunt) {
             dest: targetFolder + '/app/',
             replacements: [
                 {
-                    from: /haku.settings.systemPathRoot='\/'/g,
+                    from: /haku.settings.systemPathRoot="\/"/g,
                     to: 'haku.settings.systemPathRoot=window.location.pathname.replace("index.html", "")'
                 },
                 {

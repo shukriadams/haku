@@ -19,7 +19,6 @@ binary_builds/Eclipse debug project/Fortehwin/assets/*
 /compile_ios.bat
 /gruntSettings.js
 /src/css/normalize.css
-/src/css/foundation-build.css
 /compile_ios
 /src/serve this.bat
 /src/start compass.bat
@@ -27,3 +26,4 @@ binary_builds/Eclipse debug project/Fortehwin/assets/*
 /_gruntSettings.js
 /src/lib
 
+/src/css/haku-style.css
